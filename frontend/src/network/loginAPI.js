@@ -1,5 +1,5 @@
-import { callGet } from "./calls";
+import { callPost } from "./calls";
 
 export const loginAPI = {
-  getAllUsers: () => callGet("users"),
+  login: (username, password) => callPost("/login", {username, password}),
 };
