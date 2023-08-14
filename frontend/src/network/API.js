@@ -1,5 +1,10 @@
 import { callPost } from "./calls";
 
 export const API = {
-  attemptLogin: (email, password) => callPost("/login", {email: email, password: password}),
+  submitLogin: async (email, password) => {
+    localStorage.removeItem("jwtToken");
+    const result = await callPost("/login", {email: email, password: password});
+    localStorage.setItem("jwtToken", result);
+     }
+  
 };

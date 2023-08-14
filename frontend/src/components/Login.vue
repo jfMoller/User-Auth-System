@@ -10,13 +10,13 @@ export default {
   },
 
   methods: {
-    async login() {
+    login() {
       console.log("Logging in...");
       console.log("Email:", this.email);
       console.log("Password:", this.password);
 
-      const isSuccessful = await API.attemptLogin(this.email, this.password);
-      console.log(isSuccessful)
+      const token = localStorage.getItem('jwtToken');
+      console.log(token)
     },
   },
 };

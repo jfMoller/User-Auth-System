@@ -14,7 +14,10 @@ export async function callGet(endpoint) {
 
 export async function callPost(endpoint, data) {
   try {
-    const response = await axios.post(baseUrl + endpoint, data);
+    const response = await axios.post(baseUrl + endpoint, data, {
+      withCredentials: true
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error posting data:", error);
