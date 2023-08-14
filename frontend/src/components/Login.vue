@@ -1,24 +1,22 @@
 <script>
-import { loginAPI } from '../network/loginAPI';
+import { API } from '../network/API';
 
 export default {
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
     };
   },
 
   methods: {
-    login() {
-      // Add your login logic here
+    async login() {
       console.log("Logging in...");
-      console.log("Username:", this.username);
+      console.log("Email:", this.email);
       console.log("Password:", this.password);
 
-      // Assuming you want to fetch user data after login
-      loginAPI.login({ username: this.username, password: this.password })
-      .then((loginAttempt) => console.log("Staus: " + loginAttempt))
+      const isSuccessful = await API.attemptLogin(this.email, this.password);
+      console.log(isSuccessful)
     },
   },
 };
@@ -28,8 +26,8 @@ export default {
   <div class="login-container">
     <h2>Login Page</h2>
     <div class="input-container">
-      <label for="username">Username:</label>
-      <input type="text" id="username" v-model="username" />
+      <label for="email">Email:</label>
+      <input type="text" id="email" v-model="email" />
     </div>
     <div class="input-container">
       <label for="password">Password:</label>

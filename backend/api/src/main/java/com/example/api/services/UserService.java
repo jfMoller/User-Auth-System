@@ -24,13 +24,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean loginUser(Login loginAttempt) {
+    public boolean loginUser(Login loginRequest) {
         List<User> users = userRepository.findAll();
-
         for (User user : users) {
-            System.out.println(user.toString() + " " + loginAttempt.toString());
-            if ((user.getEmail() == loginAttempt.getEmail()) &&
-                    (user.getPassword() == loginAttempt.getPassword())) {
+            if ((user.getEmail().equals(loginRequest.getEmail())) &&
+                    (user.getPassword().equals(loginRequest.getPassword()))) {
                 return true;
             }
         }

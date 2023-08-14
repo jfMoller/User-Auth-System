@@ -20,7 +20,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public boolean loginUser(@RequestBody Login loginAttempt) {
-        return userService.loginUser(loginAttempt);
+    public boolean loginUser(@RequestBody Login loginRequest) {
+        return userService.loginUser(loginRequest);
     }
 }
