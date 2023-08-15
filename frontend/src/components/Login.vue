@@ -1,5 +1,6 @@
 <script>
 import { API } from '../network/API';
+import store from "../store";
 
 export default {
   data() {
@@ -10,12 +11,22 @@ export default {
   },
 
   methods: {
-    login() {
+    async login() {
       console.log("Logging in...");
       console.log("Email:", this.email);
       console.log("Password:", this.password);
 
-      API.submitLogin(this.email, this.password);
+      const response = await API.submitLogin(this.email, this.password);
+
+      if (response.success) {
+        store.commit("setAuthenticated", true);
+        sessionStorage.setItem("token", response.token);
+        await this.$store.dispatch('authenticate');
+        this.$router.push('/home');
+      }
+      else if (response.error) {
+        console.log(response.message);
+      }
     },
   },
 };

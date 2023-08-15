@@ -5,7 +5,7 @@ public class LoginErrorResponse {
     private String errorMessage;
 
     public LoginErrorResponse(String errorMessage) {
-        this.json = String.format("{\"success\": true, \"token\": \"%s\"}", errorMessage);;
+        this.json = String.format("{\"error\": true, \"message\": \"%s\"}", errorMessage);;
     }
 
     @Override

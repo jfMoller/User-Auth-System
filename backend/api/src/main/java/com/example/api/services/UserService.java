@@ -34,13 +34,11 @@ public class UserService {
                 String jwtToken = new JwtTokenService().generateToken(Long.toString(user.getId()), user.getEmail(), "user");
 
                 String response = new LoginSuccessResponse(jwtToken).toString();
-                System.out.println(response);
                 return response;
             }
         }
         String errorMessage = "Login failed.";
         String response = new LoginErrorResponse(errorMessage).toString();
-        System.out.println(response);
         return response;
     }
 }
