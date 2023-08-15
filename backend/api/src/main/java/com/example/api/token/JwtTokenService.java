@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class JwtToken {
+public class JwtTokenService {
     protected String secretKey = "FEWEF34134111af3213sDdEFAAEAEDAaaf9340+49423SAaea";
 
     public String generateToken(String userId, String username, String role) {

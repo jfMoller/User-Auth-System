@@ -1,9 +1,11 @@
 package com.example.api.services;
 
 import com.example.api.entities.Login;
+import com.example.api.entities.LoginErrorResponse;
+import com.example.api.entities.LoginSuccessResponse;
 import com.example.api.entities.User;
 import com.example.api.repositories.UserRepository;
-import com.example.api.token.JwtToken;
+import com.example.api.token.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +30,17 @@ public class UserService {
         for (User user : users) {
             if ((user.getEmail().equals(loginRequest.getEmail())) &&
                     (user.getPassword().equals(loginRequest.getPassword()))) {
-                JwtToken token = new JwtToken();
-                return token.generateToken(Long.toString(user.getId()), user.getEmail(), "user");
+
+                String jwtToken = new JwtTokenService().generateToken(Long.toString(user.getId()), user.getEmail(), "user");
+
+                String response = new LoginSuccessResponse(jwtToken).toString();
+                System.out.println(response);
+                return response;
             }
         }
-
-        return null;
+        String errorMessage = "Login failed.";
+        String response = new LoginErrorResponse(errorMessage).toString();
+        System.out.println(response);
+        return response;
     }
 }

@@ -15,8 +15,7 @@ export default {
       console.log("Email:", this.email);
       console.log("Password:", this.password);
 
-      const token = localStorage.getItem('jwtToken');
-      console.log(token)
+      API.submitLogin(this.email, this.password);
     },
   },
 };
