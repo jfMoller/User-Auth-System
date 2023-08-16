@@ -20,7 +20,7 @@ export default {
 
       if (response.success) {
         store.commit("setAuthenticated", true);
-        sessionStorage.setItem("token", response.token);
+        sessionStorage.setItem("jwtToken", response.token);
         await this.$store.dispatch('authenticate');
         this.$router.push('/home');
       }
