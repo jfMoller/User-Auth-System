@@ -5,19 +5,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
-public class User {
-
+@Table(name = "products")
+public class Product {
     @Id
     private Long id;
-
     private String name;
 
-    private String email;
-
-    private String password;
-
-    public User() {
+    public Product() {
     }
 
     public Long getId() {
@@ -28,21 +22,11 @@ public class User {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

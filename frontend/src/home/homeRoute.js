@@ -1,4 +1,3 @@
-<script>
 import HomePage from "./HomePage.vue";
 import store from "../store";
 
@@ -14,4 +13,3 @@ const homeRoute = {
     }
 }
 export default homeRoute;
-</script>

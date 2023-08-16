@@ -1,4 +1,3 @@
-<script>
 import Login from "./LoginPage.vue";
 import store from "../store";
 
@@ -15,4 +14,3 @@ const loginRoute = {
 };
 
 export default loginRoute;
-</script>
