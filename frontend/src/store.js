@@ -20,7 +20,6 @@ export default createStore({
   getters: {
     isAuthenticated(state) {
       // Removed "this" and passed "state" as an argument
-      console.log(state.isAuthenticated);
       return state.isAuthenticated;
     },
   },

@@ -1,31 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "./components/Login.vue";
-import HomePage from "./HomePage.vue";
-import store from "./store";
+import loginRoute from "./login/LoginRoute";
+import homeRoute from "./home/homeRoute";
 
 export const routes = [
-  {
-    path: "/",
-    component: Login,
-    beforeEnter: (to, from, next) => {
-      if (store.getters.isAuthenticated) {
-        next("/home");
-      } else {
-        next();
-      }
-    },
-  },
-  {
-    path: "/home",
-    component: HomePage,
-    beforeEnter: (to, from, next) => {
-      if (store.getters.isAuthenticated) {
-        next();
-      } else {
-        next("/");
-      }
-    },
-  },
+  loginRoute,
+  homeRoute,
   { path: "/:catchAll(.*)", redirect: "/" },
 ];
 
