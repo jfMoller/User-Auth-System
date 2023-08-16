@@ -50,7 +50,7 @@ export default {
 <style scoped>
 /* Add your custom styles here */
 .login-container {
-  width: 300px;
+  width: max-content;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -70,7 +70,7 @@ label {
 }
 
 input {
-  width: 100%;
+ 
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;

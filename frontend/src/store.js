@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-export default createStore({
+const store = createStore({
   state: {
     isAuthenticated: false,
   },
@@ -19,8 +19,9 @@ export default createStore({
   },
   getters: {
     isAuthenticated(state) {
-      // Removed "this" and passed "state" as an argument
       return state.isAuthenticated;
     },
   },
 });
+
+export default store;

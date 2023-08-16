@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import loginRoute from "./login/LoginRoute";
-import homeRoute from "./home/homeRoute";
+import loginRoute from "./login/LoginRoute.vue";
+import homeRoute from "./home/HomeRoute.vue";
 
-export const routes = [
+const routes = [
   loginRoute,
   homeRoute,
   { path: "/:catchAll(.*)", redirect: "/" },
