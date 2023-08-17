@@ -26,3 +26,14 @@ export async function callPost(endpoint, data) {
   });
   return result.data;
 }
+
+export async function callDelete(endpoint, id) {
+  await axios.request({
+    method: "DELETE",
+    url: baseUrl + endpoint + `/${id}`,
+    withCredentials: true,
+    headers: {
+      Token: sessionStorage.getItem("jwtToken"),
+    },
+  });
+}

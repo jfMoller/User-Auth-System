@@ -1,3 +1,26 @@
+<template>
+  <div class="bg-gray-900 h-screen w-screen flex items-center justify-center">
+    <div class="w-80 border border-gray-700 rounded-md flex flex-col text-center p-4">
+      <h2 class="text-white text-xl font-bold mb-4">Login Page</h2>
+      <div class="flex flex-col space-y-4">
+        <div class="flex flex-col">
+          <label class="text-left text-white" for="email">Email:</label>
+          <input type="text" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="email"
+            v-model="email" />
+        </div>
+        <div class="flex flex-col">
+          <label class="text-left text-white" for="password">Password:</label>
+          <input type="password" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="password"
+            v-model="password" />
+        </div>
+      </div>
+      <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300"
+        @click="login">Login</button>
+    </div>
+  </div>
+</template>
+
+
 <script>
 import { API } from '../network/API';
 import store from "../store";
@@ -31,38 +54,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="bg-gray-100 h-screen w-screen flex items-center justify-center">
-    <div class="min-w-max border border-gray-300 rounded-md flex flex-col text-center p-4">
-      <h2 class="font-bold min-h-">Login Page</h2>
-      <div class="p-4 flex flex-col">
-        <div class="flex flex-col py-4">
-          <label class="text-left" for="email">Email:</label>
-          <input type="text border border-gray-300" id="email" v-model="email" />
-        </div>
-        <div class="flex flex-col py-4">
-          <label class="text-left" for="password">Password:</label>
-          <input type="password" id="password" v-model="password" />
-        </div>
-      </div>
-      <button class="my-4 login-button" @click="login">Login</button>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.login-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-  background-color: #0056b3;
-}
-</style>

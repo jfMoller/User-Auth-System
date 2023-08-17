@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@heroicons/react": "^2.0.18",
     "axios": "^1.4.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
