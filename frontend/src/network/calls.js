@@ -6,7 +6,6 @@ export async function callGet(endpoint) {
   let result = await axios.request({
     method: "GET",
     url: baseUrl + endpoint,
-    withCredentials: true,
     headers: {
       Token: sessionStorage.getItem("jwtToken"),
     },
@@ -18,7 +17,6 @@ export async function callPost(endpoint, data) {
   let result = await axios.request({
     method: "POST",
     url: baseUrl + endpoint,
-    withCredentials: true,
     headers: {
       Token: sessionStorage.getItem("jwtToken"),
     },
@@ -30,8 +28,7 @@ export async function callPost(endpoint, data) {
 export async function callDelete(endpoint, id) {
   await axios.request({
     method: "DELETE",
-    url: baseUrl + endpoint + `/${id}`,
-    withCredentials: true,
+    url: baseUrl + endpoint + "/" + id,
     headers: {
       Token: sessionStorage.getItem("jwtToken"),
     },
