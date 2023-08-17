@@ -33,49 +33,25 @@ export default {
 </script>
 
 <template>
-  <div class="login-container">
-    <h2>Login Page</h2>
-    <div class="input-container">
-      <label for="email">Email:</label>
-      <input type="text" id="email" v-model="email" />
+  <div class="bg-gray-100 h-screen w-screen flex items-center justify-center">
+    <div class="min-w-max border border-gray-300 rounded-md flex flex-col text-center p-4">
+      <h2 class="font-bold min-h-">Login Page</h2>
+      <div class="p-4 flex flex-col">
+        <div class="flex flex-col py-4">
+          <label class="text-left" for="email">Email:</label>
+          <input type="text border border-gray-300" id="email" v-model="email" />
+        </div>
+        <div class="flex flex-col py-4">
+          <label class="text-left" for="password">Password:</label>
+          <input type="password" id="password" v-model="password" />
+        </div>
+      </div>
+      <button class="my-4 login-button" @click="login">Login</button>
     </div>
-    <div class="input-container">
-      <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" />
-    </div>
-    <button class="login-button" @click="login">Login</button>
   </div>
 </template>
 
 <style scoped>
-/* Add your custom styles here */
-.login-container {
-  width: max-content;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.input-container {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input {
- 
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
 .login-button {
   background-color: #007bff;
   color: #fff;
