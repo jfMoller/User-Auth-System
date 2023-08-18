@@ -4,35 +4,37 @@
       <ul class="p-4 mb-4 rounded">
         <li class="bg-gray-800 cursor-pointer hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
           v-for="product in products" :key="product.id">
-          <div class="flex flex-row items-center justify-between">
+          <div class="flex flex-row items-center justify-between "
+            :class="{ 'py-2': product.isEditing, 'P-0': !product.isEditing }">
 
-            <p v-if="!isEditing" class="text-l font-bold m-2">{{ product.id + ". " + product.name }}</p>
+
+            <p v-if="!product.isEditing" class="text-l font-bold m-2">{{ product.id + ". " + product.name }}</p>
 
             <div class="flex flex-row items-center">
-              <p v-if="isEditing" class="text-l font-bold">{{ product.id }}</p>
-              <input v-if="isEditing" v-model="product.name" class="px-2 py-1 rounded mx-2 bg-gray-500" />
+              <p v-if="product.isEditing" class="text-l font-bold">{{ product.id }}</p>
+              <input v-if="product.isEditing" v-model="product.name" class="px-2 py-1 rounded mx-2 bg-gray-500" />
             </div>
 
 
 
             <div class="flex space-x-2">
 
-              <button v-if="!isEditing" class="py-1 px-3 bg-green-700 hover:bg-green-800 rounded"
-                @click="setIsEditing(true)">
+              <button v-if="!product.isEditing" class="py-1 px-3 bg-green-700 hover:bg-green-800 rounded"
+                @click="startEditing(product)">
                 Edit
               </button>
 
-              <button v-if="!isEditing" class="py-1 px-3 bg-red-700 hover:bg-red-800 rounded"
-                @click="handleDeleteProduct(product.id); setIsEditing(false)">
+              <button v-if="!product.isEditing" class="py-1 px-3 bg-red-700 hover:bg-red-800 rounded"
+                @click="handleDeleteProduct(product.id)">
                 Delete
               </button>
 
-              <button v-if="isEditing" class="py-1 px-3 bg-blue-700 hover:bg-blue-800 rounded"
-                @click="handleUpdateProduct(product); setIsEditing(false)">
+              <button v-if="product.isEditing" class="py-1 px-3 bg-blue-700 hover:bg-blue-800 rounded"
+                @click="handleUpdateProduct(product)">
                 Save
               </button>
-              <button v-if="isEditing" class="py-1 px-3 bg-orange-700 hover:bg-orange-800 rounded"
-                @click="setIsEditing(false)">
+              <button v-if="product.isEditing" class="py-1 px-3 bg-orange-700 hover:bg-orange-800 rounded"
+                @click="stopEditing(product)">
                 Cancel
               </button>
 
@@ -46,19 +48,22 @@
 
 <script>
 import { API } from "../network/API";
-import { mapGetters, mapMutations } from "vuex";
-import store from "../store"
 
 export default {
   async created() {
     await this.updateProducts();
   },
-  computed: {
-    ...mapGetters(["isEditing"]),
-  },
+
 
   methods: {
-    ...mapMutations(["setIsEditing"]),
+
+    startEditing(product) {
+      product.isEditing = true;
+    },
+
+    stopEditing(product) {
+      product.isEditing = false;
+    },
 
     async updateProducts() {
       try {
