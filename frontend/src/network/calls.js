@@ -25,6 +25,18 @@ export async function callPost(endpoint, data) {
   return result.data;
 }
 
+export async function callPut(endpoint, data) {
+  let result = await axios.request({
+    method: "PUT",
+    url: baseUrl + endpoint,
+    headers: {
+      Token: sessionStorage.getItem("jwtToken"),
+    },
+    data: data,
+  });
+  return result.data;
+}
+
 export async function callDelete(endpoint, id) {
   await axios.request({
     method: "DELETE",

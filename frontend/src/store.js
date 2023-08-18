@@ -3,19 +3,18 @@ import { createStore } from "vuex";
 const store = createStore({
   state: {
     isAuthenticated: false,
-    products: [],
+    isEditing: false,
+    isLoading: false,
   },
   mutations: {
     setAuthenticated(state, value) {
       state.isAuthenticated = value;
     },
-    setProducts(state, products) {
-      state.products = products;
+    setIsEditing(state, value) {
+      state.isEditing = value;
     },
-    removeProduct(state, productID) {
-      state.products = state.products.filter(
-        (product) => product.id !== productID
-      );
+    setIsLoading(state, value) {
+      state.isLoading = value;
     },
   },
   actions: {
@@ -25,11 +24,11 @@ const store = createStore({
     disconnect({ commit }) {
       commit("setAuthenticated", false);
     },
-    setProducts({ commit }, products) {
-      commit("setProducts", products);
+    setIsEditing({ commit }, value) {
+      commit("setIsEditing", value);
     },
-    removeProduct({ commit }, productID) {
-      commit("removeProduct", productID);
+    setIsLoading({ commit }, value) {
+      commit("setIsLoading", value);
     },
   },
   getters: {
@@ -37,8 +36,12 @@ const store = createStore({
       return state.isAuthenticated;
     },
 
-    products(state) {
-      return state.products;
+    isEditing(state) {
+      return state.isEditing;
+    },
+
+    isLoading(state) {
+      return state.isLoading;
     },
   },
 });

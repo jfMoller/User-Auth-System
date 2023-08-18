@@ -2,20 +2,40 @@
   <div class="bg-gray-900 text-white max-h-screen flex items-center justify-center">
     <div>
       <ul class="p-4 mb-4 rounded">
-        <li
-          class="bg-gray-800 cursor-pointer hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
-          v-for="product in products"
-          :key="product.id"
-        >
+        <li class="bg-gray-800 cursor-pointer hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
+          v-for="product in products" :key="product.id">
           <div class="flex flex-row items-center justify-between">
-            <p class="text-l font-bold m-2">{{ product.id + ". " + product.name }}</p>
+
+            <p v-if="!isEditing" class="text-l font-bold m-2">{{ product.id + ". " + product.name }}</p>
+
+            <div class="flex flex-row items-center">
+              <p v-if="isEditing" class="text-l font-bold">{{ product.id }}</p>
+              <input v-if="isEditing" v-model="product.name" class="px-2 py-1 rounded mx-2 bg-gray-500" />
+            </div>
+
+
+
             <div class="flex space-x-2">
-              <button class="py-1 px-3 bg-green-700 hover:bg-green-800 rounded" @click="editProduct(product.id)">
+
+              <button v-if="!isEditing" class="py-1 px-3 bg-green-700 hover:bg-green-800 rounded"
+                @click="setIsEditing(true)">
                 Edit
               </button>
-              <button class="py-1 px-3 bg-red-700 hover:bg-red-800 rounded" @click="deleteProduct(product.id)">
+
+              <button v-if="!isEditing" class="py-1 px-3 bg-red-700 hover:bg-red-800 rounded"
+                @click="handleDeleteProduct(product.id); setIsEditing(false)">
                 Delete
               </button>
+
+              <button v-if="isEditing" class="py-1 px-3 bg-blue-700 hover:bg-blue-800 rounded"
+                @click="handleUpdateProduct(product); setIsEditing(false)">
+                Save
+              </button>
+              <button v-if="isEditing" class="py-1 px-3 bg-orange-700 hover:bg-orange-800 rounded"
+                @click="setIsEditing(false)">
+                Cancel
+              </button>
+
             </div>
           </div>
         </li>
@@ -25,32 +45,44 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import { API } from "../network/API";
+import { mapGetters, mapMutations } from "vuex";
+import store from "../store"
 
 export default {
   async created() {
-    await this.getAllProducts();
+    await this.updateProducts();
   },
-  methods: {
-    ...mapActions(["removeProduct"]),
+  computed: {
+    ...mapGetters(["isEditing"]),
+  },
 
-    async getAllProducts() {
+  methods: {
+    ...mapMutations(["setIsEditing"]),
+
+    async updateProducts() {
       try {
         const products = await API.getAllProducts();
         this.products = products;
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error updateing products:", error);
       }
     },
-    async editProduct(productId) {
+    async handleUpdateProduct(product) {
+      try {
+        await API.updateProduct(product)
+        this.updateProducts();
+
+      } catch (error) {
+        console.error("Error updating product:", error);
+      }
     },
 
-    async deleteProduct(productId) {
-      console.log(productId);
+    async handleDeleteProduct(productId) {
       try {
-        await API.deleteProductByID(productId);
-        this.removeProduct(productId);
+        await API.deleteProduct(productId);
+        this.updateProducts();
+
       } catch (error) {
         console.error("Error deleting product:", error);
       }

@@ -33,6 +33,19 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/products")
+    public void editProduct(@RequestHeader("Token") String token, @RequestBody Product product) {
+
+        JwtTokenService tokenService = new JwtTokenService();
+        boolean isValidToken = tokenService.validateToken(token);
+
+        if (isValidToken) {
+            productService.editProduct(product);
+        } else {
+            throw new UnauthorizedException("Invalid token.");
+        }
+    }
+
     @DeleteMapping("/products/{productID}")
     public void deleteProduct(@RequestHeader("Token") String token, @PathVariable Long productID) {
 
