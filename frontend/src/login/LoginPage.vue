@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-900 h-screen w-screen flex items-center justify-center">
     <div class="w-80 border border-gray-700 rounded-md flex flex-col text-center p-4">
-      <h2 class="text-white text-xl font-bold mb-4">Login Page</h2>
+      <h2 class="text-white text-xl font-bold mb-4">Login</h2>
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col">
           <label class="text-left text-white" for="email">Email:</label>
@@ -14,7 +14,10 @@
             v-model="password" />
         </div>
       </div>
-      <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300"
+      <button class="text-white text-sm py-2">
+        <router-link to="/register" class="hover:underline">Register new account</router-link>
+      </button>
+      <button class=" bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition duration-300"
         @click="login">Login</button>
     </div>
   </div>

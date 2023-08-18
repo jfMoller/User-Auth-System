@@ -1,9 +1,6 @@
 package com.example.api.services;
 
-import com.example.api.entities.Login;
-import com.example.api.entities.LoginErrorResponse;
-import com.example.api.entities.LoginSuccessResponse;
-import com.example.api.entities.User;
+import com.example.api.entities.*;
 import com.example.api.repositories.UserRepository;
 import com.example.api.token.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +37,21 @@ public class UserService {
         String errorMessage = "Login failed.";
         String response = new LoginErrorResponse(errorMessage).toString();
         return response;
+    }
+
+    public String registerUser(UserRegistration newUser) {
+
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if ((user.getEmail().equals(newUser.getEmail()))) {
+                return "Email already exists";
+            } else {
+                User validUser = new User(newUser.getName(), newUser.getEmail(), newUser.getPassword());
+                userRepository.save(validUser);
+                return "Registered successfully";
+            }
+        }
+
+        return "";
     }
 }
