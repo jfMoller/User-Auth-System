@@ -1,9 +1,13 @@
 <template>
-  <div class="bg-gray-900 text-white max-h-screen flex items-center justify-center">
+  <div class="bg-gray-900 text-white max-h-max flex items-center justify-center">
     <div>
-      <ul class="p-4 mb-4 rounded">
-        <li class="bg-gray-800 cursor-pointer hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
-          v-for="product in products" :key="product.id">
+      <ul class="px-4 mb-4 rounded sm:grid sm:grid-cols-2 lg:grid-cols-3">
+        <li v-if="products.length <= 0">
+          <p>There are no products available.</p>
+        </li>
+
+        <li class="bg-gray-800 cursor-pointer min-w-max hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
+          v-for="product in  products " :key="product.id">
           <div class="flex flex-row items-center justify-between "
             :class="{ 'py-2': product.isEditing, 'P-0': !product.isEditing }">
 
@@ -54,11 +58,14 @@ export default {
     await this.updateProducts();
   },
 
-
   methods: {
 
     startEditing(product) {
-      product.isEditing = true;
+      this.products.forEach((otherProduct) => {
+        if (otherProduct.id !== product.id && otherProduct.isEditing) {
+          otherProduct.isEditing = false;
+        }
+      }); product.isEditing = true;
     },
 
     stopEditing(product) {
@@ -70,7 +77,7 @@ export default {
         const products = await API.getAllProducts();
         this.products = products;
       } catch (error) {
-        console.error("Error updateing products:", error);
+        console.error("Error updating products:", error);
       }
     },
     async handleUpdateProduct(product) {

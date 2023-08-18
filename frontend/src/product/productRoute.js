@@ -1,9 +1,9 @@
-import HomePage from "./HomePage.vue";
+import ProductPage from "./ProductPage.vue"
 import store from "../store";
 
-const homeRoute = {
-    path: "/home",
-    component: HomePage,
+const productRoute = {
+    path: "/product",
+    component: ProductPage,
     beforeEnter: (to, from, next) => {
       if (store.getters.isAuthenticated) {
         next();
@@ -12,4 +12,4 @@ const homeRoute = {
       }
     }
 }
-export default homeRoute;
+export default productRoute;

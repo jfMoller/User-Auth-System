@@ -45,7 +45,7 @@ export default {
         store.commit("setAuthenticated", true);
         sessionStorage.setItem("jwtToken", response.token);
         await this.$store.dispatch('authenticate');
-        this.$router.push('/home');
+        this.$router.push('/product');
       }
       else if (response.error) {
         console.log(response.message);
