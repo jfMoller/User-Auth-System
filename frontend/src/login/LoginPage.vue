@@ -2,23 +2,20 @@
   <div class="bg-gray-900 h-screen w-screen flex items-center justify-center">
     <div class="w-80 border border-gray-700 rounded-md flex flex-col text-center p-4">
       <h2 class="text-white text-xl font-bold mb-4">Login</h2>
-      <div class="flex flex-col space-y-4">
-        <div class="flex flex-col">
-          <label class="text-left text-white" for="email">Email:</label>
-          <input type="text" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="email"
-            v-model="email" />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-left text-white" for="password">Password:</label>
-          <input type="password" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="password"
-            v-model="password" />
-        </div>
+      <div class="flex flex-col space-y-3">
+        <label class="text-left text-white" for="email">Email:</label>
+        <input type="text" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="email"
+          v-model="email" />
+
+        <label class="text-left text-white" for="password">Password:</label>
+        <input type="password" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="password"
+          v-model="password" />
+        <button class="text-white text-sm py-2 my-2">
+          <router-link to="/register" class="hover:underline">Register new account</router-link>
+        </button>
+        <button class=" bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition duration-300"
+          @click="login">Login</button>
       </div>
-      <button class="text-white text-sm py-2">
-        <router-link to="/register" class="hover:underline">Register new account</router-link>
-      </button>
-      <button class=" bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition duration-300"
-        @click="login">Login</button>
     </div>
   </div>
 </template>

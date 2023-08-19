@@ -4,6 +4,7 @@ const store = createStore({
   state: {
     isAuthenticated: false,
     isLoading: false,
+    hasAllRegisterCredentials: false,
   },
   mutations: {
     setAuthenticated(state, value) {
@@ -11,6 +12,9 @@ const store = createStore({
     },
     setIsLoading(state, value) {
       state.isLoading = value;
+    },
+    setHasAllRegisterCredentials(state, value) {
+      state.hasAllRegisterCredentials = value;
     },
   },
   actions: {
@@ -23,6 +27,9 @@ const store = createStore({
     setIsLoading({ commit }, value) {
       commit("setIsLoading", value);
     },
+    setHasAllRegisterCredentials({ commit }, value) {
+      commit("setHasAllRegisterCredentials", value);
+    },
   },
   getters: {
     isAuthenticated(state) {
@@ -31,6 +38,10 @@ const store = createStore({
 
     isLoading(state) {
       return state.isLoading;
+    },
+
+    hasAllRegisterCredentials(state) {
+      return state.hasAllRegisterCredentials;
     },
   },
 });
