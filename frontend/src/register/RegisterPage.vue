@@ -14,9 +14,9 @@
                 <label class="text-left text-white" for="password">Password:</label>
                 <input type="password" required class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded"
                     id="password" v-model="password" />
-                <button class="text-white text-sm py-2 my-1">
-                    <router-link to="/login" class="hover:underline">Login</router-link>
-                </button>
+
+                    <RouterLinkButton route="/login" text="Login" />
+
                 <button class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300
                     disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400" @click="registerAccount"
                     :disabled="!hasAllRegisterCredentials">Register</button>
@@ -31,6 +31,7 @@
 <script>
 import { API } from '../network/API';
 import { mapGetters, mapActions } from 'vuex';
+import RouterLinkButton from '../components/RouterLinkButton.vue';
 
 export default {
     data() {
@@ -72,6 +73,10 @@ export default {
             await API.registerAccount(this.name, this.email, this.password);
         },
     },
+
+    components: {
+        RouterLinkButton,
+    }
 };
 </script>
   

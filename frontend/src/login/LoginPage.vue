@@ -10,11 +10,10 @@
         <label class="text-left text-white" for="password">Password:</label>
         <input type="password" class="border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded" id="password"
           v-model="password" />
-        <button class="text-white text-sm py-2 my-2">
-          <router-link to="/register" class="hover:underline">Register new account</router-link>
-        </button>
-        <button class=" bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition duration-300"
-          @click="login">Login</button>
+
+        <RouterLinkButton route="/register" text="Register a new account" />
+
+        <LoginButton :email="email" :password="password" />
       </div>
     </div>
   </div>
@@ -22,8 +21,8 @@
 
 
 <script>
-import { API } from '../network/API';
-import store from "../store";
+import LoginButton from './components/LoginButton.vue';
+import RouterLinkButton from '../components/RouterLinkButton.vue';
 
 export default {
   data() {
@@ -33,24 +32,9 @@ export default {
     };
   },
 
-  methods: {
-    async login() {
-      console.log("Logging in...");
-      console.log("Email:", this.email);
-      console.log("Password:", this.password);
-
-      const response = await API.submitLogin(this.email, this.password);
-
-      if (response.success) {
-        store.commit("setAuthenticated", true);
-        sessionStorage.setItem("jwtToken", response.token);
-        await this.$store.dispatch('authenticate');
-        this.$router.push('/product');
-      }
-      else if (response.error) {
-        console.log(response.message);
-      }
-    },
-  },
+  components: {
+    LoginButton,
+    RouterLinkButton,
+  }
 };
 </script>
