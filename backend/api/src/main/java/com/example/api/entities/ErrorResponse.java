@@ -1,10 +1,10 @@
 package com.example.api.entities;
 
-public class LoginErrorResponse {
+public class ErrorResponse {
     private String json;
     private String errorMessage;
 
-    public LoginErrorResponse(String errorMessage) {
+    public ErrorResponse(String errorMessage) {
         this.json = String.format("{\"error\": true, \"message\": \"%s\"}", errorMessage);;
     }
 

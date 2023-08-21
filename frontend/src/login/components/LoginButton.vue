@@ -13,10 +13,6 @@ export default {
     },
     methods: {
         async handleLogin() {
-            console.log("Logging in...");
-            console.log("Email:", this.email);
-            console.log("Password:", this.password);
-
             const response = await API.submitLogin(this.email, this.password);
 
             if (response.success) {

@@ -1,31 +1,38 @@
 <template>
-    <div class="flex flex-col">
-      <label v-if="label" :for="inputId" class="text-left text-white mb-2">{{ label }}</label>
-      <input :type="type" :id="inputId" :value="value" :class="inputClasses" @input="$emit('input', $event.target.value)" />
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      label: String,
+  <div class="flex flex-col">
+    <label class="text-left text-white">{{ label }}</label>
+    <input :type="type" :class="['border', 'border-gray-700', 'bg-gray-800', 'text-white', 'px-2', 'py-1', 'rounded', customClass]"
+      v-model="userInput" @input="sendMessageToParent" />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    initialValue: {
       type: String,
-      id: String,
-      value: String,
-      inputClass: String,
+      default: "",
     },
-    computed: {
-      inputId() {
-        return this.id || `${this.label.toLowerCase()}-input`;
-      },
-      inputClasses() {
-        return "border border-gray-700 bg-gray-800 text-white px-2 py-1 rounded " + this.inputClass;
-      },
+    type: {
+      type: String,
+      default: "text",
     },
-    methods: {
-      updateValue(event) {
-        this.$emit('input', event.target.value);
-      },
+    label: String,
+    customClass: String,
+    required: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  data() {
+    return {
+      userInput: this.initialValue,
+    };
+  },
+  methods: {
+    sendMessageToParent() {
+      this.$emit('child-event', this.userInput);
     },
-  };
-  </script>
+  },
+};
+</script>
