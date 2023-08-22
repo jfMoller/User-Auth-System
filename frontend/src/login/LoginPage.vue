@@ -5,9 +5,9 @@
       <h2 class="text-white text-xl font-bold mb-4">Login</h2>
 
       <div class="flex flex-col space-y-3">
-        <InputField label="Email:" type="email" @child-event="handleFieldEvent(email)" />
+        <InputField label="Email:" type="email" @child-event="handleEmailEvent" />
 
-        <InputField label="Password:" type="password" @child-event="handleFieldEvent(password)" />
+        <InputField label="Password:" type="password" @child-event="handlePasswordEvent" />
 
         <RouterLinkButton route="/register" text="Register a new account" />
 
@@ -32,8 +32,12 @@ export default {
   },
 
   methods: {
-    handleFieldEvent(data, value) {
-      this.data = value;
+    handleEmailEvent(email) {
+      this.email = email;
+    },
+
+    handlePasswordEvent(password) {
+      this.password = password;
     },
   },
 

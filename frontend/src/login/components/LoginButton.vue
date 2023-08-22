@@ -1,30 +1,37 @@
 <template>
-    <button class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition duration-300"
-        @click="handleLogin">Login</button>
-</template>
+    <div>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white p-2 w-full rounded-md transition duration-300"
+              @click="handleLogin">Login</button>
   
-<script>
-import { API } from "../../network/API";
-import store from "../../store";
-export default {
+      <div v-if="response && response.ERROR" class="text-red-500 mt-2">
+        {{ response.message }}
+      </div>
+    </div>
+  </template>
+    
+  <script>
+  import { API } from "../../network/API";
+  import store from "../../store";
+  export default {
     props: {
-        email: String,
-        password: String
+      email: String,
+      password: String
+    },
+    data() {
+      return {
+        response: null
+      };
     },
     methods: {
-        async handleLogin() {
-            const response = await API.submitLogin(this.email, this.password);
-
-            if (response.success) {
-                store.commit("setAuthenticated", true);
-                sessionStorage.setItem("jwtToken", response.token);
-                await this.$store.dispatch('authenticate');
-                this.$router.push('/product');
-            }
-            else if (response.error) {
-                console.log(response.message);
-            }
+      async handleLogin() {
+        this.response = await API.submitLogin(this.email, this.password);
+        if (this.response.SUCCESS) {
+          store.commit("setAuthenticated", true);
+          sessionStorage.setItem("jwtToken", this.response.token);
+          await this.$store.dispatch('authenticate');
+          this.$router.push('/product');
         }
+      }
     }
-};
-</script>
+  };
+  </script>

@@ -1,14 +1,20 @@
 <template>
-    <button class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300
-            disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400" @click="registerAccount"
-        :disabled="!hasAllRegisterCredentials">Register</button>
+    <div>
+        <button class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300
+              disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400 w-full" @click="registerAccount"
+            :disabled="!hasAllRegisterCredentials">Register</button>
+
+        <div v-if="response && response.ERROR" class="text-red-500 mt-2">
+            {{ response.message }}
+        </div>
+    </div>
 </template>
+  
 <script>
 import { mapGetters } from 'vuex';
 import { API } from '../../network/API';
 
 export default {
-
     props: {
         name: {
             type: String,
@@ -23,25 +29,21 @@ export default {
             required: true,
         }
     },
-
+    data() {
+        return {
+            response: null
+        };
+    },
     computed: {
         ...mapGetters(["hasAllRegisterCredentials"]),
     },
     methods: {
-        
         async registerAccount() {
-        const response = await API.registerAccount(this.name, this.email, this.password);
-            console.log(response)
-        if (response.success) {
-                console.log(response)
+            this.response = await API.registerAccount(this.name, this.email, this.password);
+            if (this.response.SUCCESS) {
                 this.$router.push('/login');
-            }
-            else if (response.error) {
-                console.log(response.message);
             }
         },
     },
-}
-
-
+};
 </script>
