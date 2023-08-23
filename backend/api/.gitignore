@@ -35,5 +35,5 @@ build/
 # Ignore application.properties (DB url, username & password)
 src/main/resources/application.properties
 
-# Ignore secretKey.env (Encryption for JWT-Token)
-src/main/resources/secretKey.env
+# Ignore secret_key.env (Encryption for JWT-Token)
+src/main/resources/secret_key.env

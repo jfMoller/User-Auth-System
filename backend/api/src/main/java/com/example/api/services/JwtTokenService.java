@@ -43,7 +43,7 @@ public class JwtTokenService {
 
     public void getSecretKey() {
         try {
-            ClassPathResource resource = new ClassPathResource("secretKey.env");
+            ClassPathResource resource = new ClassPathResource("secret_key.env");
             InputStream inputStream = resource.getInputStream();
 
             Properties properties = new Properties();
