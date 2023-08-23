@@ -26,11 +26,8 @@ public class ProductService {
     public void editProduct(Product updatedProduct) {
         Optional<Product> selectedProduct = productRepository.findById(updatedProduct.getId());
         if (selectedProduct.isPresent()) {
-            Product currentProduct = selectedProduct.get();
-            currentProduct = new Product(updatedProduct.getId(), updatedProduct.getName());
-            productRepository.save(currentProduct);
-        }
-        else {
+            productRepository.save(new Product(updatedProduct.getId(), updatedProduct.getName()));
+        } else {
             throw new UnauthorizedException("Invalid product ID; product does not exist");
         }
     }

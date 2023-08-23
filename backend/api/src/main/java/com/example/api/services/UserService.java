@@ -6,6 +6,7 @@ import com.example.api.dto.LoginResponse;
 import com.example.api.dto.UserRegistration;
 import com.example.api.entities.*;
 import com.example.api.repositories.UserRepository;
+import com.example.api.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,57 +33,79 @@ public class UserService {
 
         List<User> users = this.getUsers();
         for (User user : users) {
-            if ((user.getEmail().equals(loginRequest.getEmail())) &&
-                    (user.getPassword().equals(loginRequest.getPassword()))) {
-                String jwtToken = new JwtTokenService().generateToken(Long.toString(user.getId()), user.getEmail(), "user");
-
-                return new LoginResponse(jwtToken).sendToken();
+            if (isValidLoginCredentials(user, loginRequest)) {
+                return new LoginResponse(JwtTokenUtil.generateToken(
+                        Long.toString(user.getId()),
+                        user.getEmail(), "user")).sendToken();
             }
         }
         return new LoginResponse().sendError();
     }
 
     public String registerUser(UserRegistration newUser) {
-
-        if (newUser.getName().isEmpty() ||
-                newUser.getName().isBlank() ||
-                newUser.getName().equals("test")) {
-            return new JsonResponse(ERROR, "name", "Invalid name format.").send();
-        }
-
-        if (newUser.getPassword().isEmpty() ||
-                newUser.getPassword().isBlank() ||
-                newUser.getPassword().length() < 5) {
-            return new JsonResponse(ERROR, "password", "Your password needs to be at least 5 characters long.").send();
-        }
-
-        if (newUser.getEmail().isEmpty() ||
-                newUser.getEmail().isBlank() ||
-                // This regex pattern checks for a valid email format with "@" before a dot, ensuring
-                // there's content before and after the "@" and dot, and no trailing dots.
-                // Detailed explanation:
-                // ^        - Start of the string
-                // .*       - Any sequence of characters
-                // @        - The "@" character
-                // .*       - Any sequence of characters
-                // \.       - A literal dot (.)
-                // .+       - One or more of any characters (ensures something after the dot)
-                // [^\\.]   - Any character that is not a dot
-                // *        - Zero or more of the preceding characters
-                // $        - End of the string
-                !newUser.getEmail().matches("^.*@.*\\..+[^\\.]*$")) {
-            return new JsonResponse(ERROR, "email", "Invalid email format; valid example: example@gmail.com.").send();
-        }
+        validateUserRegistrationFormat(newUser);
 
         List<User> users = userRepository.findAll();
         for (User user : users) {
-
-            if ((user.getEmail().equals(newUser.getEmail()))) {
+            if (isAlreadyExistingAccount(user.getEmail(), newUser.getEmail())) {
                 return new JsonResponse(ERROR, "email", "An account with this email already exists.").send();
             }
         }
-        User validUser = new User(newUser.getName(), newUser.getEmail(), newUser.getPassword());
-        userRepository.save(validUser);
+        userRepository.save(new User(newUser.getName(), newUser.getEmail(), newUser.getPassword()));
         return new JsonResponse(SUCCESS).send();
+    }
+
+    public String validateUserRegistrationFormat(UserRegistration newUser) {
+        if (!isValidNameFormat(newUser.getName())) {
+            return new JsonResponse(ERROR, "name", "Invalid name format.").send();
+        }
+
+        if (!isValidPasswordFormat(newUser.getPassword())) {
+            return new JsonResponse(ERROR, "password", "Your password needs to be at least 5 characters long.").send();
+        }
+
+        if (!isValidEmailFormat(newUser.getEmail())) {
+            return new JsonResponse(ERROR, "email", "Invalid email format; valid example: example@gmail.com.").send();
+        }
+
+        return new JsonResponse(SUCCESS).send();
+    }
+
+    public boolean isValidLoginCredentials(User user, LoginRequest loginRequest) {
+        return (user.getEmail().equals(loginRequest.getEmail())) && (user.getPassword().equals(loginRequest.getPassword()));
+    }
+
+    public boolean isValidNameFormat(String name) {
+        return name.isEmpty() ||
+                name.isBlank() ||
+                name.equals("");
+    }
+
+    public boolean isValidPasswordFormat(String password) {
+        return password.isEmpty() ||
+                password.isBlank() ||
+                password.length() < 5;
+    }
+
+    public boolean isValidEmailFormat(String email) {
+        return email.isEmpty() ||
+                email.isBlank() ||
+                email.matches("^.*@.*\\..+[^\\.]*$");
+        // This regex pattern checks for a valid email format with "@" before a dot, ensuring
+        // there's content before and after the "@" and dot, and no trailing dots.
+        // Detailed explanation:
+        // ^        - Start of the string
+        // .*       - Any sequence of characters
+        // @        - The "@" character
+        // .*       - Any sequence of characters
+        // \.       - A literal dot (.)
+        // .+       - One or more of any characters (ensures something after the dot)
+        // [^\\.]   - Any character that is not a dot
+        // *        - Zero or more of the preceding characters
+        // $        - End of the string
+    }
+
+    public boolean isAlreadyExistingAccount(String existingEmail, String requestedEmail) {
+        return existingEmail.equals(requestedEmail);
     }
 }

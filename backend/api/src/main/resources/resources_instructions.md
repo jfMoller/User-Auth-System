@@ -23,4 +23,4 @@ Replace your_secret_key with your desired secret key for JWT token generation.
 The **application.properties** file contains configuration settings for your Spring Boot application, particularly related to the database connection and JPA settings.
 The **secret_key.env** file stores the secret key used for JWT token signing.
 
-After creating and configuring these files, your application will be able to use the provided database connection settings and JWT secret key.
+After creating and configuring these files, your application will be able to use the provided database connection settings and the secret key needed to generate JWT tokens.

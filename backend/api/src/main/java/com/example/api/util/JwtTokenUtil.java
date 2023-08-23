@@ -1,5 +1,6 @@
-package com.example.api.services;
+package com.example.api.util;
 
+import com.example.api.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.core.io.ClassPathResource;
@@ -9,16 +10,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 @Service
-public class JwtTokenService {
-    private String secretKey;
+public class JwtTokenUtil {
+    private static String secretKey;
 
-    public JwtTokenService() {
-        getSecretKey();
+    public JwtTokenUtil() {
+        fetchSecretKey();
     }
 
-    public String generateToken(String userId, String username, String role) {
+    public static String generateToken(String userId, String username, String role) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + 3600000); //token valid for 1 hour
 
@@ -32,7 +34,7 @@ public class JwtTokenService {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public static boolean isValidToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
@@ -41,7 +43,23 @@ public class JwtTokenService {
         }
     }
 
-    public void getSecretKey() {
+    public static void handleVoidMethodAccess(String token, Runnable method) {
+        if (JwtTokenUtil.isValidToken(token)) {
+            method.run();
+        } else {
+            throw new UnauthorizedException("Invalid token; access denied.");
+        }
+    }
+
+    public static <T> T handleReturnMethodAccess(String token, Supplier<T> method) {
+        if (JwtTokenUtil.isValidToken(token)) {
+            return method.get();
+        } else {
+            throw new UnauthorizedException("Invalid token; access denied.");
+        }
+    }
+
+    public static void fetchSecretKey() {
         try {
             ClassPathResource resource = new ClassPathResource("secret_key.env");
             InputStream inputStream = resource.getInputStream();

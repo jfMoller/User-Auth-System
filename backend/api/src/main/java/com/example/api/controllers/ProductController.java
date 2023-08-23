@@ -1,9 +1,8 @@
 package com.example.api.controllers;
 
 import com.example.api.entities.Product;
-import com.example.api.exceptions.UnauthorizedException;
+import com.example.api.util.JwtTokenUtil;
 import com.example.api.services.ProductService;
-import com.example.api.services.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,40 +21,16 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> getProducts(@RequestHeader("Token") String token) {
-
-        JwtTokenService tokenService = new JwtTokenService();
-        boolean isValidToken = tokenService.validateToken(token);
-
-        if (isValidToken) {
-            return productService.getProducts();
-        } else {
-            return null;
-        }
+        return JwtTokenUtil.handleReturnMethodAccess(token, () -> productService.getProducts());
     }
 
     @PutMapping("/products")
     public void editProduct(@RequestHeader("Token") String token, @RequestBody Product product) {
-
-        JwtTokenService tokenService = new JwtTokenService();
-        boolean isValidToken = tokenService.validateToken(token);
-
-        if (isValidToken) {
-            productService.editProduct(product);
-        } else {
-            throw new UnauthorizedException("Invalid token.");
-        }
+        JwtTokenUtil.handleVoidMethodAccess(token, () -> productService.editProduct(product));
     }
 
     @DeleteMapping("/products/{productID}")
     public void deleteProduct(@RequestHeader("Token") String token, @PathVariable Long productID) {
-
-        JwtTokenService tokenService = new JwtTokenService();
-        boolean isValidToken = tokenService.validateToken(token);
-
-        if (isValidToken) {
-            productService.deleteProduct(productID);
-        } else {
-            throw new UnauthorizedException("Invalid token.");
-        }
+        JwtTokenUtil.handleVoidMethodAccess(token, () -> productService.deleteProduct(productID));
     }
 }
