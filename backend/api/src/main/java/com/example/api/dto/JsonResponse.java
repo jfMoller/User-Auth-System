@@ -1,4 +1,6 @@
-package com.example.api.entities;
+package com.example.api.dto;
+
+import com.example.api.dto.enums.ResponseStatus;
 
 public class JsonResponse {
 

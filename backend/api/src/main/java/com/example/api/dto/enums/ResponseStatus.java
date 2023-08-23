@@ -1,4 +1,4 @@
-package com.example.api.entities;
+package com.example.api.dto.enums;
 
 public enum ResponseStatus {
     SUCCESS,

@@ -1,4 +1,4 @@
-package com.example.api.entities;
+package com.example.api.exceptions;
 
 public class UnauthorizedException extends RuntimeException {
     private String message;

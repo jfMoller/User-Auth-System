@@ -1,9 +1,9 @@
 package com.example.api.controllers;
 
 import com.example.api.entities.Product;
-import com.example.api.entities.UnauthorizedException;
+import com.example.api.exceptions.UnauthorizedException;
 import com.example.api.services.ProductService;
-import com.example.api.token.JwtTokenService;
+import com.example.api.services.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,7 @@
-package com.example.api.entities;
+package com.example.api.dto;
 
-import static com.example.api.entities.ResponseStatus.ERROR;
+import static com.example.api.dto.enums.ResponseStatus.ERROR;
+import static com.example.api.dto.enums.ResponseStatus.SUCCESS;
 
 public class LoginResponse {
     private String token;
@@ -13,7 +14,7 @@ public class LoginResponse {
     }
 
     public String sendToken() {
-        return String.format("{\"SUCCESS\": true, \"token\": \"%s\"}", token);
+        return String.format("{\"%s\": true, \"token\": \"%s\"}", SUCCESS, token);
     }
 
     public String sendError() {

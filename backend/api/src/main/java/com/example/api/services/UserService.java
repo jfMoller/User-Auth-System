@@ -1,15 +1,18 @@
 package com.example.api.services;
 
+import com.example.api.dto.JsonResponse;
+import com.example.api.dto.LoginRequest;
+import com.example.api.dto.LoginResponse;
+import com.example.api.dto.UserRegistration;
 import com.example.api.entities.*;
 import com.example.api.repositories.UserRepository;
-import com.example.api.token.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.api.entities.ResponseStatus.ERROR;
-import static com.example.api.entities.ResponseStatus.SUCCESS;
+import static com.example.api.dto.enums.ResponseStatus.ERROR;
+import static com.example.api.dto.enums.ResponseStatus.SUCCESS;
 
 @Service
 public class UserService {
@@ -25,9 +28,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public String loginUser(Login loginRequest) {
+    public String loginUser(LoginRequest loginRequest) {
 
-        List<User> users = userRepository.findAll();
+        List<User> users = this.getUsers();
         for (User user : users) {
             if ((user.getEmail().equals(loginRequest.getEmail())) &&
                     (user.getPassword().equals(loginRequest.getPassword()))) {

@@ -1,4 +1,4 @@
-package com.example.api.entities;
+package com.example.api.dto;
 
 public class UserRegistration {
     private String name;

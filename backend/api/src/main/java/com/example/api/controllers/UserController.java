@@ -1,7 +1,7 @@
 package com.example.api.controllers;
 
 import com.example.api.entities.User;
-import com.example.api.entities.UserRegistration;
+import com.example.api.dto.UserRegistration;
 import com.example.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

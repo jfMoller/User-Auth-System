@@ -1,7 +1,7 @@
 package com.example.api.services;
 
 import com.example.api.entities.Product;
-import com.example.api.entities.UnauthorizedException;
+import com.example.api.exceptions.UnauthorizedException;
 import com.example.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

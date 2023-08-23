@@ -1,18 +1,26 @@
-package com.example.api.token;
+package com.example.api.services;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Properties;
 
 @Service
 public class JwtTokenService {
-    protected String secretKey = "FEWEF34134111af3213sDdEFAAEAEDAaaf9340+49423SAaea";
+    private String secretKey;
+
+    public JwtTokenService() {
+        getSecretKey();
+    }
 
     public String generateToken(String userId, String username, String role) {
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + 3600000); // Token valid for 1 hour
+        Date expiration = new Date(now.getTime() + 3600000); //token valid for 1 hour
 
         return Jwts.builder()
                 .setSubject(userId)
@@ -30,6 +38,20 @@ public class JwtTokenService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public void getSecretKey() {
+        try {
+            ClassPathResource resource = new ClassPathResource("secretKey.env");
+            InputStream inputStream = resource.getInputStream();
+
+            Properties properties = new Properties();
+            properties.load(inputStream);
+
+            secretKey = properties.getProperty("JWT_SECRET_KEY");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

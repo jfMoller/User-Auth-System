@@ -1,6 +1,6 @@
 package com.example.api.controllers;
 
-import com.example.api.entities.Login;
+import com.example.api.dto.LoginRequest;
 import com.example.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody Login loginRequest) {
+    public String loginUser(@RequestBody LoginRequest loginRequest) {
         return userService.loginUser(loginRequest);
     }
 }
