@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import LoginButton from './components/LoginButton.vue';
+import LoginButton from '../components/connection/LoginButton.vue';
 import RouterLinkButton from '../components/RouterLinkButton.vue';
 import InputField from '../components/form/InputField.vue';
 

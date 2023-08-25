@@ -1,6 +1,6 @@
 <template>
     <button v-if="isVisibleIf" :class="[
-        'py-1', 'px-3', 'rounded',
+        'py-1', 'px-3', 'rounded', 'transition', 'duration-300',
         customClass
     ]" @click="handleClick">
         {{ text }}

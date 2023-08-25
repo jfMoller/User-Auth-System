@@ -1,5 +1,5 @@
 <template>
-    <li class="bg-gray-800 cursor-pointer min-w-max hover:bg-gray-700 border border-gray-900 m-2 px-2 py-1 rounded"
+    <li class="bg-gray-800 min-w-max hover:bg-gray-700 border-gray-900 m-2 px-2 py-1 rounded transition duration-300"
         v-for="product in  products " :key="product.id">
         <div class="flex flex-row items-center justify-between "
             :class="{ 'py-2': product.isEditing, 'P-0': !product.isEditing }">
