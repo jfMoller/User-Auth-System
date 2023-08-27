@@ -6,7 +6,7 @@ const loginRoute = {
   component: Login,
   beforeEnter: (to, from, next) => {
     if (store.getters.isAuthenticated) {
-      next("/product");
+      next("/products");
     } else {
       next();
     }

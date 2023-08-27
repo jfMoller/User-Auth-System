@@ -1,23 +1,21 @@
 <template>
-    <div class="bg-gray-900 h-screen w-screen flex items-center justify-center">
-        <div class="w-80 border border-gray-700 rounded-md flex flex-col text-center p-4">
+    <InputContainer>
 
-            <h2 class="text-white text-xl font-bold mb-4">Register Account</h2>
+        <h2 class="text-white text-xl font-bold mb-4">Register Account</h2>
 
-            <div class="flex flex-col space-y-3">
-                <InputField label="Name:" type="text" @child-event="handleNameEvent" :required="true" />
+        <div class="flex flex-col space-y-3">
+            <InputField label="Name:" type="text" @child-event="handleNameEvent" :required="true" />
 
-                <InputField label="Email:" type="email" @child-event="handleEmailEvent" :required="true" />
+            <InputField label="Email:" type="email" @child-event="handleEmailEvent" :required="true" />
 
-                <InputField label="Password:" type="password" @child-event="handlePasswordEvent" :required="true" />
+            <InputField label="Password:" type="password" @child-event="handlePasswordEvent" :required="true" />
 
-                <RouterLinkButton route="/login" text="Login" />
+            <RouterLinkButton route="/login" text="Login" />
 
-                <RegisterButton :name="name" :email="email" :password="password" />
-            </div>
-
+            <RegisterButton :name="name" :email="email" :password="password" />
         </div>
-    </div>
+
+    </InputContainer>
 </template>
   
   
@@ -26,6 +24,7 @@ import { mapActions } from 'vuex';
 import InputField from '../components/form/InputField.vue';
 import RouterLinkButton from '../components/RouterLinkButton.vue';
 import RegisterButton from './components/RegisterButton.vue';
+import InputContainer from '../components/InputContainer.vue';
 
 export default {
     data() {
@@ -77,7 +76,8 @@ export default {
     components: {
         InputField,
         RouterLinkButton,
-        RegisterButton
+        RegisterButton,
+        InputContainer
     },
 };
 </script>

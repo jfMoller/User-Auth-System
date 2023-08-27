@@ -5,22 +5,15 @@
     </button>
 </template>
 
-<script setup>
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-
-const store = useStore();
-const router = useRouter();
-
-async function handleLogout() {
-    sessionStorage.removeItem("token");
-    await store.dispatch('revokeAuthentication');
-    router.push('/');
-}
-</script>
-
 <script>
 export default {
-    name: 'LogoutButton'
+
+    methods: {
+        async handleLogout() {
+            sessionStorage.removeItem("token");
+            await this.$store.dispatch('revokeAuthentication');
+            this.$router.push('/');
+        }
+    }
 }
 </script>

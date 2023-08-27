@@ -1,27 +1,26 @@
 <template>
-  <div class="bg-gray-900 h-screen w-screen flex items-center justify-center">
-    <div class="w-80 border border-gray-700 rounded-md flex flex-col text-center p-4">
+  <InputContainer>
 
-      <h2 class="text-white text-xl font-bold mb-4">Login</h2>
+    <h2 class="text-white text-xl font-bold mb-4">Login</h2>
 
-      <div class="flex flex-col space-y-3">
-        <InputField label="Email:" type="email" @child-event="handleEmailEvent" />
+    <div class="flex flex-col space-y-3">
+      <InputField label="Email:" type="email" @child-event="handleEmailEvent" />
 
-        <InputField label="Password:" type="password" @child-event="handlePasswordEvent" />
+      <InputField label="Password:" type="password" @child-event="handlePasswordEvent" />
 
-        <RouterLinkButton route="/register" text="Register a new account" />
+      <RouterLinkButton route="/register" text="Register a new account" />
 
-        <LoginButton :email="email" :password="password" />
-      </div>
-
+      <LoginButton :email="email" :password="password" />
     </div>
-  </div>
+    
+  </InputContainer>
 </template>
 
 <script>
 import LoginButton from '../components/connection/LoginButton.vue';
 import RouterLinkButton from '../components/RouterLinkButton.vue';
 import InputField from '../components/form/InputField.vue';
+import InputContainer from '../components/InputContainer.vue';
 
 export default {
   data() {
@@ -45,6 +44,7 @@ export default {
     LoginButton,
     RouterLinkButton,
     InputField,
+    InputContainer
   },
 };
 </script>

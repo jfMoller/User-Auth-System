@@ -2,7 +2,7 @@ import ProductPage from "./ProductPage.vue"
 import store from "../store";
 
 const productRoute = {
-    path: "/product",
+    path: "/products",
     component: ProductPage,
     beforeEnter: (to, from, next) => {
       if (store.getters.isAuthenticated) {
