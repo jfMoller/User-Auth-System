@@ -1,6 +1,9 @@
 package com.example.api.entities;
 
+import com.example.api.dto.enums.UserRole;
 import jakarta.persistence.*;
+
+import static com.example.api.dto.enums.UserRole.USER;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +19,8 @@ public class User {
 
     private String password;
 
+    private UserRole userRole;
+
     public User() {
     }
 
@@ -23,6 +28,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.userRole = USER;
     }
 
     public Long getId() {
@@ -41,13 +47,7 @@ public class User {
         return password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public UserRole getUserRole() {
+        return userRole;
     }
 }

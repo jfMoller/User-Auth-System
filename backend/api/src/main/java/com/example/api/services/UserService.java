@@ -34,9 +34,9 @@ public class UserService {
         List<User> users = this.getUsers();
         for (User user : users) {
             if (isValidLoginCredentials(user, loginRequest)) {
-                return new LoginResponse(JwtTokenUtil.generateToken(
+                return new LoginResponse(user.getUserRole(), JwtTokenUtil.generateToken(
                         Long.toString(user.getId()),
-                        user.getEmail(), "user")).sendToken();
+                        user.getEmail(), user.getUserRole().toString())).sendToken();
             }
         }
         return new LoginResponse().sendError();
@@ -78,7 +78,7 @@ public class UserService {
     public boolean isValidNameFormat(String name) {
         return name.isEmpty() ||
                 name.isBlank() ||
-                name.equals("");
+                name == "";
     }
 
     public boolean isValidPasswordFormat(String password) {
