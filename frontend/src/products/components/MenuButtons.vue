@@ -13,7 +13,7 @@
 </template>
 <script>
 import ConditionalButton from '../../components/ConditionalButton.vue';
-import { API } from '../../network/API';
+import { userAPI } from '../../network/userAPI';
 export default {
     props: {
         products: {
@@ -48,7 +48,7 @@ export default {
 
         async handleDeleteProduct(productId) {
             try {
-                await API.deleteProduct(productId);
+                await userAPI.deleteProduct(productId);
                 this.refreshProducts();
             }
             catch (error) {

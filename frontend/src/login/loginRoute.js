@@ -1,12 +1,12 @@
-import Login from "./LoginPage.vue";
+import LoginPage from "./LoginPage.vue";
 import store from "../store";
 
 const loginRoute = {
   path: "/login",
-  component: Login,
+  component: LoginPage,
   beforeEnter: (to, from, next) => {
-    if (store.getters.isAuthenticated) {
-      next("/products");
+    if (store.getters.isAuthenticated && !store.getters.userRole === "ADMIN") {
+      next("/home");
     } else {
       next();
     }

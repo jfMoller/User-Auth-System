@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { API } from "../network/API";
+import { userAPI } from "../network/userAPI";
 import MenuButtons from "./components/MenuButtons.vue";
 import ProductItem from "./components/ProductItem.vue";
 
@@ -24,7 +24,7 @@ export default {
 
     async refreshProducts() {
       try {
-        const products = await API.getAllProducts();
+        const products = await userAPI.getAllProducts();
         this.products = products;
       }
       catch (error) {
@@ -33,7 +33,7 @@ export default {
     },
     async handleUpdateProduct(product) {
       try {
-        await API.updateProduct(product);
+        await userAPI.updateProduct(product);
         this.refreshProducts();
       }
       catch (error) {

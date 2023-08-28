@@ -10,7 +10,7 @@
 </template>
     
 <script>
-import { API } from "../../network/API";
+import { userAPI } from "../../network/userAPI";
 export default {
   props: {
     email: String,
@@ -23,13 +23,14 @@ export default {
   },
   methods: {
     async handleLogin() {
-      this.response = await API.submitLogin(this.email, this.password);
+      this.response = await userAPI.submitLogin(this.email, this.password);
       if (this.response.SUCCESS) {
         this.$store.commit("setAuthenticated", true);
+        this.$store.commit("setUserRole", this.response.userRole)
         sessionStorage.setItem("jwtToken", this.response.token);
 
         await this.$store.dispatch('authenticate');
-        this.$router.push('/products');
+        this.$router.push('/home');
       }
     }
   }

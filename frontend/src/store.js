@@ -3,12 +3,16 @@ import { createStore } from "vuex";
 const store = createStore({
   state: {
     isAuthenticated: false,
+    userRole: String,
     isLoading: false,
     hasAllRegisterCredentials: false,
   },
   mutations: {
     setAuthenticated(state, value) {
       state.isAuthenticated = value;
+    },
+    setUserRole(state, value) {
+      state.userRole = value;
     },
     setIsLoading(state, value) {
       state.isLoading = value;
@@ -24,6 +28,9 @@ const store = createStore({
     revokeAuthentication({ commit }) {
       commit("setAuthenticated", false);
     },
+    setUserRole({ commit }, value) {
+      commit("setUserRole", value);
+    },
     setIsLoading({ commit }, value) {
       commit("setIsLoading", value);
     },
@@ -34,6 +41,10 @@ const store = createStore({
   getters: {
     isAuthenticated(state) {
       return state.isAuthenticated;
+    },
+
+    userRole(state) {
+      return state.userRole;
     },
 
     isLoading(state) {

@@ -1,6 +1,7 @@
 package com.example.api.util;
 
 import com.example.api.exceptions.UnauthorizedException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.core.io.ClassPathResource;
@@ -42,6 +43,36 @@ public class JwtTokenUtil {
             return false;
         }
     }
+
+    public static TokenInfo extractTokenInfo(String token) {
+        try {
+            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+            String role = (String) claims.get("role");
+            return new TokenInfo(role);
+        } catch (Exception e) {
+            throw new UnauthorizedException("Invalid token; access denied.");
+        }
+    }
+
+   public static void handleVoidAdminMethodAccess(String token, Runnable method) {
+
+       if (isAdmin(token)) {
+           handleVoidMethodAccess(token, method);
+       } else {
+           throw new UnauthorizedException("Invalid token; access denied.");
+       }
+   }
+
+   public static boolean isAdmin(String token) {
+       TokenInfo tokenInfo = extractTokenInfo(token);
+       String userRole = tokenInfo.getRole();
+        System.out.println(userRole);
+        switch (userRole) {
+            case "ADMIN" -> { return true; }
+            case "USER" -> { return false; }
+            default -> { return false; }
+        }
+   }
 
     public static void handleVoidMethodAccess(String token, Runnable method) {
         if (JwtTokenUtil.isValidToken(token)) {

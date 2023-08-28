@@ -1,8 +1,10 @@
 package com.example.api.controllers;
 
-import com.example.api.entities.User;
+import com.example.api.dto.UpdateUserRole;
 import com.example.api.dto.UserRegistration;
+import com.example.api.entities.User;
 import com.example.api.services.UserService;
+import com.example.api.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,12 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+
+    @PutMapping("/users")
+    public void updateUserRole(@RequestHeader("Token") String token, @RequestBody UpdateUserRole request) {
+        JwtTokenUtil.handleVoidAdminMethodAccess(token,
+                () -> userService.updateUserRole(request.getUserID(), request.getUserEmail(), request.getNewUserRole()));
     }
 
     @PostMapping("/register")

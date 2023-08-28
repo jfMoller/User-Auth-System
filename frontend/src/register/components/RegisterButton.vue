@@ -12,7 +12,7 @@
   
 <script>
 import { mapGetters } from 'vuex';
-import { API } from '../../network/API';
+import { userAPI } from '../../network/userAPI';
 
 export default {
     props: {
@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         async registerAccount() {
-            this.response = await API.registerAccount(this.name, this.email, this.password);
+            this.response = await userAPI.registerAccount(this.name, this.email, this.password);
             if (this.response.SUCCESS) {
                 this.$router.push('/login');
             }

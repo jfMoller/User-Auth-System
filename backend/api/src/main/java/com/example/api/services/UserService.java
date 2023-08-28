@@ -4,6 +4,7 @@ import com.example.api.dto.JsonResponse;
 import com.example.api.dto.LoginRequest;
 import com.example.api.dto.LoginResponse;
 import com.example.api.dto.UserRegistration;
+import com.example.api.dto.enums.UserRole;
 import com.example.api.entities.*;
 import com.example.api.repositories.UserRepository;
 import com.example.api.util.JwtTokenUtil;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.api.dto.enums.ResponseStatus.ERROR;
 import static com.example.api.dto.enums.ResponseStatus.SUCCESS;
@@ -27,6 +29,24 @@ public class UserService {
 
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    public void updateUserRole(Long userID, String userEmail, String newUserRole) {
+        Optional<User> selectedUser = userRepository.findById(userID);
+        if (selectedUser.isPresent()) {
+            User user = selectedUser.get();
+
+            if (user.getEmail().equals(userEmail)) {
+                switch (newUserRole) {
+                    case "ADMIN" -> user.setUserRole(UserRole.ADMIN);
+                    case "USER" -> user.setUserRole(UserRole.USER);
+                    default -> throw new IllegalArgumentException("Invalid user role; update failed.");
+                }
+                userRepository.save(user);
+            } else {
+                throw new IllegalArgumentException("User email does not match the selected user's email; update failed.");
+            }
+        }
     }
 
     public String loginUser(LoginRequest loginRequest) {
