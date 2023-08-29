@@ -5,5 +5,6 @@ export const userAPI = {
   registerAccount: (name, email, password) => callPost("/register", {name: name, email: email, password: password}),
   getAllProducts: () => callGet("/products"),
   updateProduct: (product) => callPut("/products", product),
+  createNewProduct: (productName) => callPost("/products", { name: productName }),
   deleteProduct: (productID) => callDelete("/products", productID),
 };

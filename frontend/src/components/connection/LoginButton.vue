@@ -30,7 +30,7 @@ export default {
         sessionStorage.setItem("jwtToken", this.response.token);
 
         await this.$store.dispatch('authenticate');
-        this.$router.push('/home');
+        this.$router.push('/options');
       }
     }
   }

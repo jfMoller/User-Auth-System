@@ -27,10 +27,6 @@ export default {
         refreshProducts: {
             type: Function,
             required: true
-        },
-        handleUpdateProduct: {
-            type: Function,
-            required: true
         }
     },
     methods: {
@@ -44,6 +40,16 @@ export default {
         },
         stopEditing(product) {
             product.isEditing = false;
+        },
+
+        async handleUpdateProduct(product) {
+            try {
+                await userAPI.updateProduct(product);
+                this.refreshProducts();
+            }
+            catch (error) {
+                console.error("Error updating product:", error);
+            }
         },
 
         async handleDeleteProduct(productId) {

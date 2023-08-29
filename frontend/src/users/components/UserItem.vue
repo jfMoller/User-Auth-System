@@ -18,7 +18,7 @@
         </div>
 
         <div class="flex justify-end space-x-2 p-2">
-            <MenuButtons :user="user" :users="users" :refreshUsers="refreshUsers" :handleUpdateUserRole="handleUpdateUserRole" />
+            <MenuButtons :user="user" :users="users" :refreshUsers="refreshUsers" />
         </div>
     </li>
 </template>
@@ -37,10 +37,6 @@ export default {
             type: Function,
             required: true
         },
-        handleUpdateUserRole: {
-            type: Function,
-            required: true
-        }
     },
     components: { MenuButtons }
 }

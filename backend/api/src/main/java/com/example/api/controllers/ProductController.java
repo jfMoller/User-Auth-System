@@ -29,6 +29,11 @@ public class ProductController {
         JwtTokenUtil.handleVoidMethodAccess(token, () -> productService.editProduct(product));
     }
 
+    @PostMapping("/products")
+    public void createNewProduct(@RequestHeader("Token") String token, @RequestBody Product product) {
+        JwtTokenUtil.handleVoidMethodAccess(token, () -> productService.createNewProduct(product));
+    }
+
     @DeleteMapping("/products/{productID}")
     public void deleteProduct(@RequestHeader("Token") String token, @PathVariable Long productID) {
         JwtTokenUtil.handleVoidMethodAccess(token, () -> productService.deleteProduct(productID));

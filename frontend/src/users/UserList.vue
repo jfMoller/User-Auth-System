@@ -5,7 +5,7 @@
         <li v-if="users.length <= 0">
           <p>There are no users available.</p>
         </li>
-        <UserItem :users="users" :refreshUsers="refreshUsers" :handleUpdateUserRole="handleUpdateUserRole" />
+        <UserItem :users="users" :refreshUsers="refreshUsers" />
       </ul>
     </div>
   </div>
@@ -29,16 +29,6 @@ export default {
       }
       catch (error) {
         console.error("Error updating ursers:", error);
-      }
-    },
-    async handleUpdateUserRole(user) {
-      console.log(user)
-      try {
-        await adminAPI.updateUserRole(user.id, user.email, user.userRole);
-        this.refreshUsers();
-      }
-      catch (error) {
-        console.error("Error updating user:", error);
       }
     },
   },

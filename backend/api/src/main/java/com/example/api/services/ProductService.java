@@ -23,6 +23,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public void createNewProduct(Product product) {
+        Product newProduct = new Product(product.getName());
+        productRepository.save(newProduct);
+    }
+
     public void editProduct(Product updatedProduct) {
         Optional<Product> selectedProduct = productRepository.findById(updatedProduct.getId());
         if (selectedProduct.isPresent()) {

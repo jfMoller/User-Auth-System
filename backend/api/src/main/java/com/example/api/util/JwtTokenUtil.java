@@ -59,17 +59,16 @@ public class JwtTokenUtil {
        if (isAdmin(token)) {
            handleVoidMethodAccess(token, method);
        } else {
-           throw new UnauthorizedException("Invalid token; access denied.");
+           throw new UnauthorizedException("Invalid admin token; access denied.");
        }
    }
 
    public static boolean isAdmin(String token) {
        TokenInfo tokenInfo = extractTokenInfo(token);
-       String userRole = tokenInfo.getRole();
+       String userRole = tokenInfo.role();
         System.out.println(userRole);
         switch (userRole) {
             case "ADMIN" -> { return true; }
-            case "USER" -> { return false; }
             default -> { return false; }
         }
    }

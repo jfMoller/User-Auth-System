@@ -32,6 +32,12 @@ public class UserController {
                 () -> userService.updateUserRole(request.getUserID(), request.getUserEmail(), request.getNewUserRole()));
     }
 
+    @DeleteMapping("/users/{userID}")
+    public void deleteProduct(@RequestHeader("Token") String token, @PathVariable Long userID) {
+        JwtTokenUtil.handleVoidAdminMethodAccess(token,
+                () -> userService.deleteUserByID(userID));
+    }
+
     @PostMapping("/register")
     public String registerUser(@RequestBody UserRegistration user) {
         return userService.registerUser(user);

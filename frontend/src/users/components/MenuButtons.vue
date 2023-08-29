@@ -28,10 +28,7 @@ export default {
             type: Function,
             required: true
         },
-        handleUpdateUserRole: {
-            type: Function,
-            required: true
-        }
+
     },
     methods: {
         startEditing(user) {
@@ -46,9 +43,21 @@ export default {
             user.isEditing = false;
         },
 
-        async handleDeleteUser(userId) {
+        async handleUpdateUserRole(user) {
+            console.log(user)
             try {
-                await adminAPI.deleteUser(userId);
+                await adminAPI.updateUserRole(user.id, user.email, user.userRole);
+                this.refreshUsers();
+            }
+            catch (error) {
+                console.error("Error updating user:", error);
+            }
+        },
+
+        async handleDeleteUser(userId) {
+            console.log(userId)
+            try {
+                await adminAPI.deleteUserByID(userId);
                 this.refreshUsers();
             }
             catch (error) {

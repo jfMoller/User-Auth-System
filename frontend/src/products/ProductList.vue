@@ -5,46 +5,26 @@
         <li v-if="products.length <= 0">
           <p>There are no products available.</p>
         </li>
-        <ProductItem :products="products" :refreshProducts="refreshProducts" :handleUpdateProduct="handleUpdateProduct" />
+        <ProductItem :products="products" :refreshProducts="refreshProducts" />
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { userAPI } from "../network/userAPI";
 import MenuButtons from "./components/MenuButtons.vue";
 import ProductItem from "./components/ProductItem.vue";
 
 export default {
-  async created() {
-    await this.refreshProducts();
-  },
-  methods: {
-
-    async refreshProducts() {
-      try {
-        const products = await userAPI.getAllProducts();
-        this.products = products;
-      }
-      catch (error) {
-        console.error("Error updating products:", error);
-      }
+  props: {
+    products: {
+      type: Array,
+      required: true
     },
-    async handleUpdateProduct(product) {
-      try {
-        await userAPI.updateProduct(product);
-        this.refreshProducts();
-      }
-      catch (error) {
-        console.error("Error updating product:", error);
-      }
-    },
-  },
-  data() {
-    return {
-      products: [],
-    };
+    refreshProducts: {
+      type: Function,
+      required: true
+    }
   },
   components: { MenuButtons, ProductItem }
 };

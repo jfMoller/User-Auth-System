@@ -1,6 +1,6 @@
 <template>
     <InputContainer>
-
+        <h1 class="text-4xl font-extrabold mb-6 text-white">Options</h1>
         <div class="flex flex-col space-y-3">
             <ConditionalButton :isVisibleIf="true" :handle-click="() => goToProductsPage()" text="Products"
                 customClass="bg-green-600 hover:bg-green-700" />

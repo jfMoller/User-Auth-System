@@ -13,8 +13,7 @@
             </div>
 
             <div class="flex space-x-2">
-                <MenuButtons :product="product" :products="products" :refreshProducts="refreshProducts"
-                    :handleUpdateProduct="handleUpdateProduct" />
+                <MenuButtons :product="product" :products="products" :refreshProducts="refreshProducts" />
             </div>
 
         </div>
@@ -35,10 +34,6 @@ export default {
             type: Function,
             required: true
         },
-        handleUpdateProduct: {
-            type: Function,
-            required: true
-        }
     },
     components: { MenuButtons }
 }
