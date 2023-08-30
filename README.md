@@ -73,7 +73,7 @@ Create a new database with a name of your choice, the database should be populat
 ## **How do I setup a connection to MariaDB and configure my secret key?**
 ### Step 1: Set Up application.properties
 
-Create a file named **application.properties** in your _backend/api/src/resources_ folder with the following content:
+Create a file named **application.properties** in your _backend/api/src/main/resources_ folder with the following content:
 
     spring.datasource.url=jdbc:mariadb://localhost:3306/DB_NAME
     spring.datasource.username=DB_USERNAME

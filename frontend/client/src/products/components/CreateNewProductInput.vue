@@ -33,7 +33,6 @@ export default {
 
     methods: {
         async handleCreateProduct(productName) {
-            console.log(productName)
             await userAPI.createNewProduct(productName);
             this.refreshProducts();
         }
