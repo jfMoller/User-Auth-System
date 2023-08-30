@@ -6,13 +6,10 @@ public enum UserRole {
 
     @Override
     public String toString() {
-        switch (this) {
-            case USER:
-                return "USER";
-            case ADMIN:
-                return "ADMIN";
-            default:
-                return "INVALID_ROLE";
-        }
+        return switch (this) {
+            case USER -> "USER";
+            case ADMIN -> "ADMIN";
+            default -> "INVALID_ROLE";
+        };
     }
 }

@@ -16,12 +16,4 @@ public class LoginRequest {
     public String getPassword() {
         return this.password;
     }
-
-    @Override
-    public String toString() {
-        return "Login{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

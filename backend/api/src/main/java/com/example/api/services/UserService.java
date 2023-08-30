@@ -52,10 +52,10 @@ public class UserService {
     public void deleteUserByID(Long userID) {
         Optional<User> selectedUser = userRepository.findById(userID);
         if (selectedUser.isPresent()) {
-                userRepository.deleteById(userID);
-            } else {
-                throw new IllegalArgumentException("Uknown userID; delete failed.");
-            }
+            userRepository.deleteById(userID);
+        } else {
+            throw new IllegalArgumentException("Uknown userID; delete failed.");
+        }
     }
 
     public String loginUser(LoginRequest loginRequest) {

@@ -1,7 +1,7 @@
 package com.example.api.services;
 
 import com.example.api.entities.Product;
-import com.example.api.exceptions.UnauthorizedException;
+import com.example.api.exceptions.InvalidProductException;
 import com.example.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,16 +29,25 @@ public class ProductService {
     }
 
     public void editProduct(Product updatedProduct) {
-        Optional<Product> selectedProduct = productRepository.findById(updatedProduct.getId());
-        if (selectedProduct.isPresent()) {
+
+        if (isValidProductID(updatedProduct.getId())) {
             productRepository.save(new Product(updatedProduct.getId(), updatedProduct.getName()));
         } else {
-            throw new UnauthorizedException("Invalid product ID; product does not exist");
+            throw new InvalidProductException("Invalid product ID; update failed.");
         }
     }
 
     public void deleteProduct(Long productID) {
-        productRepository.deleteById(productID);
+        if (isValidProductID(productID)) {
+            productRepository.deleteById(productID);
+        } else {
+            throw new InvalidProductException("Invalid product ID; delete failed.");
+        }
+    }
+
+    private boolean isValidProductID(Long productID) {
+        Optional<Product> selectedProduct = productRepository.findById(productID);
+        return selectedProduct.isPresent();
     }
 
 }

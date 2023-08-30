@@ -44,11 +44,11 @@ public class JwtTokenUtil {
         }
     }
 
-    public static TokenInfo extractTokenInfo(String token) {
+    public static TokenRoleInfo extractTokenRoleInfo(String token) {
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
             String role = (String) claims.get("role");
-            return new TokenInfo(role);
+            return new TokenRoleInfo(role);
         } catch (Exception e) {
             throw new UnauthorizedException("Invalid token; access denied.");
         }
@@ -64,13 +64,10 @@ public class JwtTokenUtil {
    }
 
    public static boolean isAdmin(String token) {
-       TokenInfo tokenInfo = extractTokenInfo(token);
-       String userRole = tokenInfo.role();
-        System.out.println(userRole);
-        switch (userRole) {
-            case "ADMIN" -> { return true; }
-            default -> { return false; }
-        }
+       TokenRoleInfo tokenRoleInfo = extractTokenRoleInfo(token);
+       String userRole = tokenRoleInfo.role();
+
+       return userRole.equals("ADMIN");
    }
 
     public static void handleVoidMethodAccess(String token, Runnable method) {

@@ -6,13 +6,10 @@ public enum ResponseStatus {
 
     @Override
     public String toString() {
-        switch (this) {
-            case SUCCESS:
-                return "SUCCESS";
-            case ERROR:
-                return "ERROR";
-            default:
-                return "INVALID_VALUE";
-        }
+        return switch (this) {
+            case SUCCESS -> "SUCCESS";
+            case ERROR -> "ERROR";
+            default -> "INVALID_VALUE";
+        };
     }
 }
