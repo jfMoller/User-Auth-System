@@ -1,4 +1,3 @@
-## **How do I setup a connection to MariaDB in Spring Spring?**
 ### Step 1: Set Up application.properties
 
 Create a file named **application.properties** with the following content:
