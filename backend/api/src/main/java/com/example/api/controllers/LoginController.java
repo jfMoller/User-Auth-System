@@ -1,6 +1,6 @@
 package com.example.api.controllers;
 
-import com.example.api.dto.LoginRequest;
+import com.example.api.dto.records.LoginRequest;
 import com.example.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

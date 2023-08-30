@@ -1,8 +1,8 @@
 package com.example.api.services;
 
 import com.example.api.dto.JsonResponse;
-import com.example.api.dto.LoginRequest;
-import com.example.api.dto.LoginResponse;
+import com.example.api.dto.records.LoginRequest;
+import com.example.api.dto.JsonLoginResponse;
 import com.example.api.dto.UserRegistration;
 import com.example.api.dto.enums.UserRole;
 import com.example.api.entities.*;
@@ -54,7 +54,7 @@ public class UserService {
         if (selectedUser.isPresent()) {
             userRepository.deleteById(userID);
         } else {
-            throw new IllegalArgumentException("Uknown userID; delete failed.");
+            throw new IllegalArgumentException("Unknown userID; delete failed.");
         }
     }
 
@@ -63,16 +63,16 @@ public class UserService {
         List<User> users = this.getUsers();
         for (User user : users) {
             if (isValidLoginCredentials(user, loginRequest)) {
-                return new LoginResponse(user.getUserRole(), JwtTokenUtil.generateToken(
+                return new JsonLoginResponse(user.getUserRole(), JwtTokenUtil.generateToken(
                         Long.toString(user.getId()),
                         user.getEmail(), user.getUserRole().toString())).sendToken();
             }
         }
-        return new LoginResponse().sendError();
+        return new JsonLoginResponse().sendError();
     }
 
     public String registerUser(UserRegistration newUser) {
-        validateUserRegistrationFormat(newUser);
+        if (sendRegistrationFormatError(newUser) != null) return sendRegistrationFormatError(newUser);
 
         List<User> users = userRepository.findAll();
         for (User user : users) {
@@ -84,9 +84,9 @@ public class UserService {
         return new JsonResponse(SUCCESS).send();
     }
 
-    public String validateUserRegistrationFormat(UserRegistration newUser) {
+    public String sendRegistrationFormatError(UserRegistration newUser) {
         if (!isValidNameFormat(newUser.getName())) {
-            return new JsonResponse(ERROR, "name", "Invalid name format.").send();
+            return new JsonResponse(ERROR, "name", "Invalid name format; only alphanumeric characters are allowed.").send();
         }
 
         if (!isValidPasswordFormat(newUser.getPassword())) {
@@ -97,29 +97,29 @@ public class UserService {
             return new JsonResponse(ERROR, "email", "Invalid email format; valid example: example@gmail.com.").send();
         }
 
-        return new JsonResponse(SUCCESS).send();
+        return null;
     }
 
     public boolean isValidLoginCredentials(User user, LoginRequest loginRequest) {
-        return (user.getEmail().equals(loginRequest.getEmail())) && (user.getPassword().equals(loginRequest.getPassword()));
+        return (user.getEmail().equals(loginRequest.email())) && (user.getPassword().equals(loginRequest.password()));
     }
 
     public boolean isValidNameFormat(String name) {
-        return name.isEmpty() ||
-                name.isBlank() ||
-                name == "";
+        if (name == null || name.isEmpty() || name.isBlank() ||
+                containsNonAlphanumericCharacters(name)) return false;
+        else return true;
     }
 
     public boolean isValidPasswordFormat(String password) {
-        return password.isEmpty() ||
-                password.isBlank() ||
-                password.length() < 5;
+        if (password.isEmpty() || password.isBlank() || password.length() < 5) return false;
+        else return true;
     }
 
     public boolean isValidEmailFormat(String email) {
-        return email.isEmpty() ||
+        if (email.isEmpty() ||
                 email.isBlank() ||
-                email.matches("^.*@.*\\..+[^\\.]*$");
+                !email.matches("^.*@.*\\..+[^.]*$")) return false;
+        else return true;
         // This regex pattern checks for a valid email format with "@" before a dot, ensuring
         // there's content before and after the "@" and dot, and no trailing dots.
         // Detailed explanation:
@@ -129,12 +129,19 @@ public class UserService {
         // .*       - Any sequence of characters
         // \.       - A literal dot (.)
         // .+       - One or more of any characters (ensures something after the dot)
-        // [^\\.]   - Any character that is not a dot
+        // [^.]   - Any character that is not a dot
         // *        - Zero or more of the preceding characters
         // $        - End of the string
     }
 
     public boolean isAlreadyExistingAccount(String existingEmail, String requestedEmail) {
         return existingEmail.equals(requestedEmail);
+    }
+
+    public boolean containsNonAlphanumericCharacters(String string) {
+        for (char character : string.toCharArray()) {
+            if (!Character.isLetterOrDigit(character)) return true;
+        }
+        return false;
     }
 }

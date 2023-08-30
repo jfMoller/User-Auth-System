@@ -5,16 +5,16 @@ import com.example.api.dto.enums.UserRole;
 import static com.example.api.dto.enums.ResponseStatus.ERROR;
 import static com.example.api.dto.enums.ResponseStatus.SUCCESS;
 
-public class LoginResponse {
+public class JsonLoginResponse {
     private UserRole userRole;
     private String token;
 
-    public LoginResponse(UserRole userRole, String token) {
+    public JsonLoginResponse(UserRole userRole, String token) {
         this.userRole = userRole;
         this.token = token;
     }
 
-    public LoginResponse() {
+    public JsonLoginResponse() {
     }
 
     public String sendToken() {
