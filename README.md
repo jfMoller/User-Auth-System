@@ -4,8 +4,8 @@
 I wanted to build a basic Vue & Java app with JWT token integration & user role-based access control.
 
 ## **Description**
-The project includes a simplistic SPA frontend client build with Vue, where users (depending on their role, e.g. admin) can view and edit products and other users. The backend API was built with Java Spring and uses a MariaDB database deployed locally with Docker.
-From working on this project I've learned more about building fullstack applications with Vue and Java Spring, I've also gained some insight into the challenges involved in constructing a reliable authentication system.
+The project includes a simplistic SPA frontend client build with Vue, where users (depending on their role, e.g., admin) can view and edit products and other users. The backend API was built with Java Spring and uses a MariaDB database deployed locally with Docker.
+From working on this project, I've learned more about building fullstack applications with Vue and Java Spring, I've also gained some insight into the challenges involved in constructing a reliable authentication system.
 
 ## **How to run locally**
 
