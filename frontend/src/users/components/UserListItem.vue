@@ -18,16 +18,14 @@
         </div>
 
         <div class="flex justify-end space-x-2 p-2">
-            <MenuButtons :user="user" :users="users" :refreshUsers="refreshUsers" />
+            <UserMenuButtons :user="user" :users="users" :refreshUsers="refreshUsers" />
         </div>
     </li>
 </template>
 <script>
-import MenuButtons from './MenuButtons.vue';
+import UserMenuButtons from './UserMenuButtons.vue';
+
 export default {
-    async created() {
-        await this.refreshUsers();
-    },
     props: {
         users: {
             type: Array,
@@ -38,6 +36,6 @@ export default {
             required: true
         },
     },
-    components: { MenuButtons }
+    components: { UserMenuButtons }
 }
 </script>

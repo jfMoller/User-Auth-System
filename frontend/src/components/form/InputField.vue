@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col">
     <label class="text-left text-white">{{ label }}</label>
-    <input :type="type" :class="['border', 'border-gray-700', 'bg-gray-800', 'text-white', 'px-2', 'py-1', 'rounded', customClass]"
+    <input :type="type"
+      :class="['border', 'border-gray-700', 'bg-gray-800', 'text-white', 'px-2', 'py-1', 'rounded', customClass]"
       v-model="userInput" @input="sendMessageToParent" />
   </div>
 </template>

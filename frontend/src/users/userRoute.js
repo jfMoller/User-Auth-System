@@ -1,4 +1,4 @@
-import UserPage from "./UserPage.vue";
+import UserPage from "./UserSPage.vue";
 import store from "../store";
 
 const userRoute = {
@@ -8,7 +8,7 @@ const userRoute = {
     if (store.getters.isAuthenticated && store.getters.userRole === "ADMIN") {
       next();
     } else {
-      next("/");
+      next("/login");
     }
   },
 };

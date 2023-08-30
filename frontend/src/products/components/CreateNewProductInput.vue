@@ -24,13 +24,13 @@
 import { userAPI } from '../../network/userAPI';
 import ConditionalButton from '../../components/ConditionalButton.vue';
 export default {
-
     props: {
         refreshProducts: {
             type: Function,
             required: true
-        },
+        }
     },
+
     methods: {
         async handleCreateProduct(productName) {
             console.log(productName)

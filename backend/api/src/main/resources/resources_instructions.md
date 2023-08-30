@@ -1,3 +1,4 @@
+## **How do I setup a connection to MariaDB in Spring Spring?**
 ### Step 1: Set Up application.properties
 
 Create a file named **application.properties** with the following content:
@@ -7,6 +8,8 @@ Create a file named **application.properties** with the following content:
     spring.datasource.password=DB_PASSWORD
     spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
     spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
+    spring.jpa.hibernate.ddl-auto=update
 
 Replace DB_NAME, DB_USERNAME, and DB_PASSWORD with your actual MariaDB database name, username, and password.
 

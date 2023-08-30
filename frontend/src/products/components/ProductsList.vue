@@ -5,15 +5,14 @@
         <li v-if="products.length <= 0">
           <p>There are no products available.</p>
         </li>
-        <ProductItem :products="products" :refreshProducts="refreshProducts" />
+        <ProductListItem :products="products" :refreshProducts="refreshProducts" />
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import MenuButtons from "./components/MenuButtons.vue";
-import ProductItem from "./components/ProductItem.vue";
+import ProductListItem from "./ProductListItem.vue";
 
 export default {
   props: {
@@ -26,6 +25,7 @@ export default {
       required: true
     }
   },
-  components: { MenuButtons, ProductItem }
+
+  components: { ProductListItem }
 };
 </script>

@@ -5,8 +5,8 @@ const loginRoute = {
   path: "/login",
   component: LoginPage,
   beforeEnter: (to, from, next) => {
-    if (store.getters.isAuthenticated && !store.getters.userRole === "ADMIN") {
-      next("/home");
+    if (store.getters.isAuthenticated) {
+      next("/options");
     } else {
       next();
     }

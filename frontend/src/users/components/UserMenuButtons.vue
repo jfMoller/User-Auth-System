@@ -44,7 +44,7 @@ export default {
         },
 
         async handleUpdateUserRole(user) {
-            console.log(user)
+
             try {
                 await adminAPI.updateUserRole(user.id, user.email, user.userRole);
                 this.refreshUsers();
@@ -55,7 +55,6 @@ export default {
         },
 
         async handleDeleteUser(userId) {
-            console.log(userId)
             try {
                 await adminAPI.deleteUserByID(userId);
                 this.refreshUsers();

@@ -13,18 +13,17 @@
             </div>
 
             <div class="flex space-x-2">
-                <MenuButtons :product="product" :products="products" :refreshProducts="refreshProducts" />
+                <ProductMenuButtons :product="product" :products="products" :refreshProducts="refreshProducts" />
             </div>
 
         </div>
     </li>
 </template>
 <script>
-import MenuButtons from './MenuButtons.vue';
+import ProductMenuButtons from './ProductMenuButtons.vue';
+
 export default {
-    async created() {
-        await this.refreshProducts();
-    },
+
     props: {
         products: {
             type: Array,
@@ -35,6 +34,6 @@ export default {
             required: true
         },
     },
-    components: { MenuButtons }
+    components: { ProductMenuButtons }
 }
 </script>

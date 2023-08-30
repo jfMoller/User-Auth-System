@@ -12,7 +12,7 @@
 
       <LoginButton :email="email" :password="password" />
     </div>
-    
+
   </InputContainer>
 </template>
 

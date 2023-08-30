@@ -5,16 +5,15 @@
         <li v-if="users.length <= 0">
           <p>There are no users available.</p>
         </li>
-        <UserItem :users="users" :refreshUsers="refreshUsers" />
+        <UserListItem :users="users" :refreshUsers="refreshUsers" />
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { adminAPI } from "../network/adminAPI";
-import MenuButtons from "./components/MenuButtons.vue";
-import UserItem from "./components/UserItem.vue";
+import { adminAPI } from "../../network/adminAPI";
+import UserListItem from "./UserListItem.vue";
 
 export default {
   async created() {
@@ -37,6 +36,6 @@ export default {
       users: [],
     };
   },
-  components: { MenuButtons, UserItem }
+  components: { UserListItem }
 };
 </script>
