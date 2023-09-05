@@ -1,4 +1,4 @@
-# **UserAuthSystem**
+# **User-Auth-System**
 
 ## **Introduction**
 I wanted to build a basic Vue & Java app with JWT token integration & user role-based access control.
@@ -11,7 +11,7 @@ From working on this project, I've learned more about building fullstack applica
 
 ### 1.	Clone the project:
 ```
-git clone https://github.com/jfMoller/UserAuthSystem.git
+git clone https://github.com/jfMoller/User-Auth-System.git
 ```
 ### 2. Install and set up Maven (to enable running Java Spring from the command line):
 
