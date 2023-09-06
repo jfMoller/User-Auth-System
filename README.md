@@ -38,6 +38,13 @@ cd client
 cd client
     npm run dev
 ```
+### 7. Register an account, or log in with one of the default users
+```bash
+ADMIN:
+email: admin@admin.com, password: password
+USER:
+email: user@user.com, password: password
+```
 
 ## **How do I get started with Docker & MariaDB?**
 ### 1. Download Docker desktop:
