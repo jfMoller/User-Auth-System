@@ -25,4 +25,5 @@ public class JsonLoginResponse {
     public String sendError() {
         return new JsonResponse(ERROR, "Login failed; check your email and/or password").send();
     }
+
 }

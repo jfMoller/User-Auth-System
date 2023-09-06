@@ -6,6 +6,7 @@ const store = createStore({
     userRole: String,
     isLoading: false,
     hasAllRegisterCredentials: false,
+    loginErrorMessage: null,
   },
   mutations: {
     setAuthenticated(state, value) {
@@ -19,6 +20,9 @@ const store = createStore({
     },
     setHasAllRegisterCredentials(state, value) {
       state.hasAllRegisterCredentials = value;
+    },
+    setLoginErrorMessage(state, value) {
+      state.loginErrorMessage = value;
     },
   },
   actions: {
@@ -37,6 +41,9 @@ const store = createStore({
     setHasAllRegisterCredentials({ commit }, value) {
       commit("setHasAllRegisterCredentials", value);
     },
+    setLoginErrorMessage({ commit }, value) {
+      commit("setLoginErrorMessage", value);
+    },
   },
   getters: {
     isAuthenticated(state) {
@@ -53,6 +60,10 @@ const store = createStore({
 
     hasAllRegisterCredentials(state) {
       return state.hasAllRegisterCredentials;
+    },
+
+    loginMessage(state) {
+      return state.loginErrorMessage;
     },
   },
 });

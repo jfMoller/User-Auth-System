@@ -1,11 +1,11 @@
 package com.example.api.services;
 
-import com.example.api.dto.JsonResponse;
-import com.example.api.dto.records.LoginRequest;
 import com.example.api.dto.JsonLoginResponse;
+import com.example.api.dto.JsonResponse;
 import com.example.api.dto.UserRegistration;
 import com.example.api.dto.enums.UserRole;
-import com.example.api.entities.*;
+import com.example.api.dto.records.LoginRequest;
+import com.example.api.entities.User;
 import com.example.api.repositories.UserRepository;
 import com.example.api.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +69,20 @@ public class UserService {
             }
         }
         return new JsonLoginResponse().sendError();
+    }
+
+    public String isAuthenticatedUser(String token, LoginRequest loginRequest) {
+        List<User> users = this.getUsers();
+        for (User user : users) {
+            if (loginRequest.email().equals(user.getEmail())) {
+                if (JwtTokenUtil.isMatchingToken(token, user)) {
+                    return new JsonResponse(SUCCESS, "Authentication success.").send();
+                } else {
+                    return new JsonResponse(ERROR, "Authentication failed.").send();
+                }
+            }
+        }
+        throw new RuntimeException("Token user mismatch; authentication failed.");
     }
 
     public String registerUser(UserRegistration newUser) {

@@ -1,5 +1,6 @@
 package com.example.api.util;
 
+import com.example.api.entities.User;
 import com.example.api.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -28,7 +29,7 @@ public class JwtTokenUtil {
 
         return Jwts.builder()
                 .setSubject(userId)
-                .claim("username", username)
+                .claim("email", username)
                 .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
@@ -48,7 +49,21 @@ public class JwtTokenUtil {
         }
     }
 
-    public static TokenRoleInfo extractTokenRoleInfo(String token) {
+    public static TokenEmail extractTokenEmailInfo(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            String email = (String) claims.get("email");
+            return new TokenEmail(email);
+        } catch (Exception e) {
+            throw new UnauthorizedException("Invalid token; access denied.");
+        }
+    }
+
+    public static TokenRole extractTokenRoleInfo(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -56,7 +71,7 @@ public class JwtTokenUtil {
                     .parseClaimsJws(token)
                     .getBody();
             String role = (String) claims.get("role");
-            return new TokenRoleInfo(role);
+            return new TokenRole(role);
         } catch (Exception e) {
             throw new UnauthorizedException("Invalid token; access denied.");
         }
@@ -71,9 +86,19 @@ public class JwtTokenUtil {
     }
 
     public static boolean isAdmin(String token) {
-        TokenRoleInfo tokenRoleInfo = extractTokenRoleInfo(token);
-        String userRole = tokenRoleInfo.role();
+        TokenRole tokenRole = extractTokenRoleInfo(token);
+        String userRole = tokenRole.role();
         return userRole.equals("ADMIN");
+    }
+
+    public static boolean isMatchingToken(String token, User user) {
+        String tokenEmail = extractTokenEmailInfo(token).email();
+        String tokenRole = extractTokenRoleInfo(token).role();
+
+        if (tokenEmail.equals(user.getEmail()) &&
+                tokenRole.equals(user.getUserRole().toString())) {
+            return true;
+        } else return false;
     }
 
     public static void handleVoidMethodAccess(String token, Runnable method) {

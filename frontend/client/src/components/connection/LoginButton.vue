@@ -6,8 +6,8 @@
       <LoadingIcon v-if="isLoading" />
     </button>
 
-    <div v-if="response && response.ERROR" class="text-red-500 mt-2">
-      {{ response.message }}
+    <div v-if="loginErrorMessage" class="text-red-500 mt-2">
+      {{ loginErrorMessage }}
     </div>
   </div>
 </template>
@@ -24,6 +24,9 @@ export default {
     isLoading() {
       return this.$store.getters.isLoading;
     },
+    loginErrorMessage() {
+      return this.$store.getters.loginMessage;
+    },
   },
   data() {
     return {
@@ -33,11 +36,7 @@ export default {
   methods: {
     async handleLogin() {
       this.response = await userAPI.submitLogin(this.email, this.password);
-      if (this.response.SUCCESS) {
-        this.$store.commit("setAuthenticated", true);
-        this.$store.commit("setUserRole", this.response.userRole);
-        sessionStorage.setItem("jwtToken", this.response.token);
-        await this.$store.dispatch('authenticate');
+      if (this.response) {
         this.$router.push('/options');
       }
     }
